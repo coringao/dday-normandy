@@ -27,6 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
+#pragma GCC diagnostic ignored "-Wimplicit-function-declaration"
+
 //Ok, since we are modifying this file, we might as well declare the
 //item spawning functions here. These are the functions that actually 
 //cause the item to be spawned. By convention, the actual spawning 
@@ -833,7 +835,7 @@ char *LoadEntFile(char *mapname, char *entities)
 		return(entities);
 
 
-	//can put the word "override" in the override ents somewhere so the ent file doesnt load
+	//can put the word "override" in the override ents somewhere so the ent file doesn't load
 	if (strstr(entities, "override"))
 	{
 		return(entities);
