@@ -15,7 +15,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -28,6 +28,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // g_local.h -- local definitions for game module
 #include "g_defines.h"
 #include "q_shared.h"
+
+#pragma GCC diagnostic ignored "-Wint-to-pointer-cast"
+#pragma GCC diagnostic ignored "-Wpointer-to-int-cast"
 
 // define GAME_INCLUDE so that game.h does not define the
 // short, server-visible gclient_t and edict_t structures,
@@ -44,9 +47,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "p_menu.h"
 
 // the "gameversion" client command will print this plus compile date
-#define	GAMEVERSION	"dday"
-//#define DEVVERSION	"4.1"
-#define DEVVERSION "5.0"//faf
+#define	GAMEVERSION	"dday-normandy"
+#define DEVVERSION      "5.3.0"
 //#define	DEBUG		1
 
 // protocol bytes that can be directly added to messages
@@ -120,9 +122,9 @@ typedef enum
 } damage_t;
 
 
-typedef enum 
+typedef enum
 {
-	WEAPON_READY, 
+	WEAPON_READY,
 	WEAPON_ACTIVATING,
 	WEAPON_DROPPING,
 	WEAPON_FIRING,
@@ -303,8 +305,8 @@ typedef struct
 	int		frame_delay;				//Frametime between each shot
 
 	// SNIPER WEAPON ONLY
-	char	*sniper_bolt_wav;			
-	int		sniper_bolt_frame;	
+	char	*sniper_bolt_wav;
+	int		sniper_bolt_frame;
 
 	// OTHER
 	int	  rnd_count;					//Hack to get the right # of rounds in the clip currently loaded (for dropping/picking up the weapon)
@@ -391,7 +393,7 @@ typedef struct
 
 //
 // this structure is cleared as each map is entered
-// it is read/written to the level.sav file for savegames
+// it is read/written to the level.save file for savegames
 //
 typedef struct
 {
@@ -454,7 +456,6 @@ typedef struct
 
 	qboolean	fullbright;//faf
 	float		fog;
-	
 	char		*campaign;
 	float		map_vote_time;
 	float		last_vote_time;
@@ -471,7 +472,7 @@ typedef struct
 
 // spawn_temp_t is only used to hold entity field values that
 
-// can be set from the editor, but aren't actualy present
+// can be set from the editor, but aren't actually present
 // in edict_t during gameplay
 
 typedef struct
@@ -757,7 +758,7 @@ extern cvar_t  *airstrikes;
 extern cvar_t  *nohud;
 extern cvar_t  *mapvoting;
 extern cvar_t  *constant_play; //for testing
-extern cvar_t  *serverimg; 
+extern cvar_t  *serverimg;
 
 extern cvar_t  *ctc;
 
@@ -785,7 +786,7 @@ extern cvar_t  *campaign;
 
 extern cvar_t *sandbaglimit;
 
-extern cvar_t *afk_time; 
+extern cvar_t *afk_time;
 
 //extern	cvar_t	*crosshair;
 
@@ -812,7 +813,7 @@ extern cvar_t *afk_time;
 #define FFL_NOSPAWN			2
 
 typedef enum {
-	F_INT, 
+	F_INT,
 	F_FLOAT,
 	F_LSTRING,			// string on disk, pointer in memory, TAG_LEVEL
 	F_GSTRING,			// string on disk, pointer in memory, TAG_GAME
@@ -1139,10 +1140,10 @@ void SaveClientData (void);
 void FetchClientEntData (edict_t *ent);
 void EndDMLevel (void);
 
-// 
-// g_maps.c 
-// 
-#include "g_maps.h" 
+//
+// g_maps.c
+//
+#include "g_maps.h"
 
 //
 // p_classes.c
@@ -1178,13 +1179,13 @@ void Give_Class_Ammo(edict_t *ent);
 #define	ANIM_ATTACK		4
 #define	ANIM_DEATH		5
 #define ANIM_CHANGESTANCE   6
-//pbowens: v_wep 
+//pbowens: v_wep
 #define ANIM_REVERSE    -1
 
-//the following is a generic container for mos's on a team. it is used to initialize the 
+//the following is a generic container for mos's on a team. it is used to initialize the
 //player on startup, as well as keep track how many slots are open for each mos.
 
-typedef struct 
+typedef struct
 {
 	char *name;				//mos name
 	char *skinname;			//mos skin (general model defined within user dll)
@@ -1198,7 +1199,7 @@ typedef struct
 	int	specnum;			//number of special items given
 	mos_t	mos;			//MOS type that struct represents...
 	int		available;		//number allowed on team
-	float	normal_weight;	//normal ammount ent may carry without speed effect
+	float	normal_weight;	//normal amount ent may carry without speed effect
 	float	max_weight;		//amount of weight before player cannot stand up (-normal_weight)
 	float	speed_mod;		//class speed
 	float	marksmanship;	// %chance of greater elevation
@@ -1222,14 +1223,14 @@ typedef struct
 	SMos_t	**mos;
 
 //	mos_t	officer_mos;	//this is the mos for the officer's old backup var
-	char	teamid[64];		//letter that denotes which seperate wave file to use
+	char	teamid[64];		//letter that denotes which separate wave file to use
 	char	playermodel[64];	// the defined player model to use
 	char	*nextmap;
 	int		need_kills;		// Needed Kills to win level
 	int		need_points;	// Needed Points to win level
 
 
-	float	arty_fire_time;	// last time artillary was fired
+	float	arty_fire_time;	// last time artillery was fired
 	int		arty_fire_count; // how many times the battary has been fired
 
 	char    *skin;//faf:  for mapper to set custom skin
@@ -1373,11 +1374,11 @@ typedef struct
 
 		hmg_rnd,
 
-		antitank_rnd,	
-	
+		antitank_rnd,
+
 		shotgun_rnd,
 		shotgun_fract,
-		
+
 		submg2_rnd,
 		submg2_fract
 ;
@@ -1495,11 +1496,11 @@ struct gclient_s
 
 	int			aim;			// hawkins truesight
 
-//	float		OBTime;					//delay before becoming solid	
+//	float		OBTime;					//delay before becoming solid
 //	qboolean	feedammo;
 	qboolean	limbo_mode;				//when player is dead in the neather regions
 
-	mags_t		mags[MAX_TEAMS];		//structure that contains magazines	
+	mags_t		mags[MAX_TEAMS];		//structure that contains magazines
 	int			*p_rnd,					//pointers for rnds
 				*p_fract;				//and fractional mags
 	int			flame_rnd;				//rounds for flamethrower
@@ -1606,7 +1607,7 @@ struct gclient_s
 
 
 	float		last_menu_time;
- 
+
 	float		last_obj_dmg_time;
 	int			last_obj_health;
 	char		*last_obj_name;
@@ -1662,7 +1663,7 @@ struct edict_s
 
 // FIXME: move these fields to a server private sv_entity_t
 	link_t		area;				// linked to a division node or leaf
-	
+
 	int			num_clusters;		// if -1, use headnode instead
 	int			clusternums[MAX_ENT_CLUSTERS];
 	int			headnode;			// unused if num_clusters != -1
@@ -1688,10 +1689,10 @@ struct edict_s
 
 	char		*model;
 	float		freetime;			// sv.time when the object was freed
-	
+
 	//
 	// only used locally in game, not by server
-	//	
+	//
 	char		*message;
 	char		*classname;
 	int			classnameb;
@@ -1805,7 +1806,7 @@ struct edict_s
 	// new var for stance
 	int				stanceflags;
 	int				stance_max,stance_min, stance_view;
-	
+
 	//new var for hit location
 	int				wound_location;
 //faf	int				die_time;
@@ -1846,7 +1847,7 @@ struct edict_s
 	float			nextspawn;	//what order to spawn
 	int				distance;
 //	qboolean		ident;
-	
+
 	float			leave_limbo_time;//faf
 	int				oldstance;//faf
 
@@ -1893,7 +1894,7 @@ extern qboolean	frame_output;
 
 
 
-typedef struct 
+typedef struct
 {
 	int  limit;
 }mapclasslimits_t;
@@ -1921,15 +1922,15 @@ int usm_index;
 
 
 //JABot[start]
-#define WEAP_BLASTER			1 
-#define WEAP_SHOTGUN			2 
-#define WEAP_MACHINEGUN			3 
-#define WEAP_CHAINGUN			4 
+#define WEAP_BLASTER			1
+#define WEAP_SHOTGUN			2
+#define WEAP_MACHINEGUN			3
+#define WEAP_CHAINGUN			4
 #define WEAP_GRENADES			5
-#define WEAP_ROCKETLAUNCHER		6 
-#define WEAP_RIFLE				7 
-#define WEAP_FLAMER				8
-#define WEAP_MELEE				9
+#define WEAP_ROCKETLAUNCHER		6
+#define WEAP_RIFLE			7
+#define WEAP_FLAMER			8
+#define WEAP_MELEE			9
 
 #define WEAP_NONE			0
 #define WEAP_TOTAL			9
@@ -2199,7 +2200,7 @@ int Surface2(char *name);
 void Find_Mission_Start_Point(edict_t *ent, vec3_t origin, vec3_t angles);
 void SP_objective_flag (edict_t *self);
 void briefcase_warn (edict_t *ent);//faf;  ctb code
-qboolean Pickup_Briefcase (edict_t *ent, edict_t *other); 
+qboolean Pickup_Briefcase (edict_t *ent, edict_t *other);
 void Drop_Briefcase (edict_t *ent, gitem_t *item);
 void Remove_Nearby_Sandbags(edict_t *ent);
 void ParseBotChat (char *text, edict_t *attacker);
