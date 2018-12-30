@@ -1,0 +1,95 @@
+.\" (c) 1997-2001 **Quake II** - Id Software, Inc.
+.\" (c) 2002 Vipersoft
+.\" (c) 2003-2011 **Q2PRO** - Andrey Nazarov [skuller]
+.\" (c) 2018 Carlos Donizete Froes [a.k.a coringao]
+.\"
+.\" This document is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This package is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this package; if not, see <http://www.gnu.org/licenses/>.
+.br
+.TH dday-normandy-ded "6" "September 2018" "D-DAY: Normandy [dedicated server]"
+.SH NAME
+dday-normandy-ded \- [q2proded] enhanced Quake 2 dedicated server.
+.br
+.SH SYNOPSIS
+.B q2proded
+.RI [ *+command* ]
+.RI [ 'arguments' ]
+.br
+.PP
+.SH DESCRIPTION
+This manual page documents briefly the *q2proded* program.
+.br
+Q2PRO is an enhanced Quake 2 dedicated server, fully compatible with original
+Quake 2 clients.
+.br
+Q2PRO dedicated server features multiview demo recording capabilities, game
+television support, network protocol optimizations, improved security and
+overall performance.
+.br
+.PP
+.SH OPTIONS
+Commands given on the command line start with a '+', and continue until
+another '+' or end of line. After command is parsed, it is merely passed to the
+internal Q2PRO interpreter, just like if typed directly at the console or read
+from config file.
+.PP
+Console variables set on the command line override those given in normal
+configuration files. If the variable does not exist as the time it is set, it
+is created for future use. User defined variables are permitted.
+.PP
+Some examples of possible commands follow. Complete description of available
+internal commands and console variables is given in supplimentary Q2PRO
+documentation, and is out of scope of this manual page.
+.PP
+.B *+set deathmatch 1*::
+    Enable deathmatch mode (no monsters, etc).
+.br
+.B *+exec config.cfg*::
+    Execute the specified configuration file. May be specified more than once.
+.br
+.B *+map q2dm1*::
+    Spawn the server on the given map.
+.br
+.B *--version*::
+    Show version and exit.
+.br
+.PP
+.SH FILES
+.B */etc/default/q2pro*::
+    System wide configuration file. The first one to be executed.
+.br
+.B */usr/share/games/q2pro/*::
+    Root of the static Quake 2 game data hierarchy. Non-executable game media
+    like textures, models and maps are installed here, either as individual
+    files, or in form of uncompressed *.pak* or ZIP compressed *.pkz*
+    packfiles.
+.br
+.B */usr/lib/games/q2pro/*::
+    Quake 2 game mod shared libraries are installed here.
+.br
+.B *~/.q2pro/*::
+    User's local data hierarchy. Files placed there take precedence over files
+    in the system hierarchy. This directory should be writable by Q2PRO user.
+    Any dynamic data Q2PRO produces (savegames, demos) are written here. Game
+    mod libraries are *never* loaded from here for security reasons.
+.br
+.PP
+.SH AUTHORS
+**Quake II** - Id Software, Inc.
+.br
+**Q2PRO** - Andrey Nazarov [skuller]
+.br
+D-DAY: Normandy created by Vipersoft and enhanced by other volunteers.
+.br
+This manual page was written by Carlos Donizete Froes [a.k.a coringao],
+for the Debian project (but may be used by others).
