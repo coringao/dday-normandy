@@ -31,6 +31,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "x_fire.h"
 //#include "p_menus.h"
 
+#pragma GCC diagnostic ignored "-Wint-to-pointer-cast"
+#pragma GCC diagnostic ignored "-Wpointer-to-int-cast"
+
 void ShowGun(edict_t *ent);
 
 void SwitchToObserver(edict_t *ent);
@@ -959,7 +962,7 @@ void TossClientWeapon (edict_t *self)
 	else
 		spread = 0.0;
 
-	// pbowens: fixed the 0 rnd count for persistant rnds on client death
+	// pbowens: fixed the 0 rnd count for persistent rnds on client death
 	if (item)
 	{
 		self->client->v_angle[YAW] -= spread;
@@ -1392,7 +1395,7 @@ void player_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int damag
 				HeadShotGib (self, point, forward, right, self->velocity);
 			}
 	
-			//faf:  dont play 2 death sounds
+			//faf:  don't play 2 death sounds
 			if (meansOfDeath != MOD_FALLING || (self->client->resp.team_on && !strcmp(self->client->resp.team_on->teamid, "gbr")))
 				gi.sound (self, CHAN_VOICE, gi.soundindex(va("*death%i.wav", (rand()%4)+1)), 1, ATTN_NORM, 0);
 		}
@@ -1529,7 +1532,7 @@ void InitClientResp (gclient_t *client)
 ==================
 SaveClientData
 
-Some information that should be persistant, like health, 
+Some information that should be persistent, like health, 
 is still stored in the edict structure, so it needs to
 be mirrored out to the client structure before all the
 edicts are wiped.
@@ -2139,11 +2142,11 @@ void body_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int damage,
 void CopyToBodyQue (edict_t *ent)
 {
 	edict_t		*body;
-	float ang;
+	float angl;
 	int temp1;
 	vec3_t   a,b;
 
-	// grab a body que and cycle to the next one
+	// grab a body queue and cycle to the next one
 	body = &g_edicts[(int)maxclients->value + level.body_que + 1];
 	level.body_que = (level.body_que + 1) % BODY_QUEUE_SIZE;
 
@@ -2181,13 +2184,13 @@ void CopyToBodyQue (edict_t *ent)
 
 
 
-// use prone vaules so gibs dont block shots	
+// use prone values so gibs don't block shots	
 //faf:  handle in player_die	body->mins[2]	= -24;
 //								body->maxs[2]   = -12;//faf 8; 
 
 //	safe_bprintf (PRINT_HIGH, "frame %i .\n", ent->s.frame); 
-//	safe_bprintf (PRINT_HIGH, "ang %s .\n", vtos(ent->s.angles)); 
-//	safe_bprintf (PRINT_HIGH, "bang %s .\n", vtos(body->s.angles)); 
+//	safe_bprintf (PRINT_HIGH, "angl %s .\n", vtos(ent->s.angles)); 
+//	safe_bprintf (PRINT_HIGH, "bangl %s .\n", vtos(body->s.angles)); 
 
 	//faf
 	if (ent->s.frame == 177)//crouch death
@@ -2220,11 +2223,11 @@ void CopyToBodyQue (edict_t *ent)
 //	safe_bprintf (PRINT_HIGH, "ent mins1 %s .\n", vtos(body->mins)); 
 //	safe_bprintf (PRINT_HIGH, "ent maxs1 %s .\n", vtos(body->maxs)); 
 
-//	safe_bprintf (PRINT_HIGH, "ang %f .\n", body->s.angles[1]); 
+//	safe_bprintf (PRINT_HIGH, "angl %f .\n", body->s.angles[1]); 
 
-	ang = anglemod (body->s.angles[1]);
+	angl = anglemod (body->s.angles[1]);
 
-//	safe_bprintf (PRINT_HIGH, "ang %f .\n", ang); 
+//	safe_bprintf (PRINT_HIGH, "angl %f .\n", angl); 
 
 
 	VectorCopy (body->mins,a);
@@ -2232,18 +2235,18 @@ void CopyToBodyQue (edict_t *ent)
 //		safe_bprintf (PRINT_HIGH, "%f a1 %f .\n", a[0],a[1]); 
 //		safe_bprintf (PRINT_HIGH, "%f b1 %f .\n", b[0],b[1]); 
 
-	if (ang > 315 || ang < 45)
+	if (angl > 315 || angl < 45)
 	{
-//		ang = 0;
+//		angl = 0;
 	}
-	else if (ang >=45 && ang < 135)
+	else if (angl >=45 && angl < 135)
 	{
 		body->mins[0]= -1 * a[1];
 		body->mins[1]= a[0];
 		body->maxs[0]= -1 * b[1];
 		body->maxs[1]= b[0];
 	}
-	else if (ang >= 135 && ang < 225)
+	else if (angl >= 135 && angl < 225)
 	{
 		body->mins[0]= -1 * a[0];
 		body->mins[1]= -1 * a[1];
@@ -2258,9 +2261,9 @@ void CopyToBodyQue (edict_t *ent)
 		body->maxs[1] = -1 * b[0];
 	}
 
-//	safe_bprintf (PRINT_HIGH, "ang %f .\n", ang); 
+//	safe_bprintf (PRINT_HIGH, "angl %f .\n", angl); 
 
-//	angle = ang * (M_PI*2 / 360);
+//	angle = angl * (M_PI*2 / 360);
 //	body->mins[0] = body->mins[0] * cos(angle) - body->mins[1] * sin (angle);
 //	body->mins[1] = body->mins[1] * cos(angle) - body->mins[0] * sin (angle);
 //
@@ -2302,7 +2305,7 @@ void CopyToBodyQue (edict_t *ent)
 	body->clipmask = ent->clipmask;
 	body->owner = ent->owner;
 	body->movetype = ent->movetype;
-/*-----/ PM /-----/ NEW:  Tranfer fire from entity to body. /-----*/
+/*-----/ PM /-----/ NEW:  Transfer fire from entity to body. /-----*/
     if (ent->health > 0)
 		body->health = 0;
     else
@@ -2451,7 +2454,7 @@ void PutClientInServer (edict_t *ent)
 		memset (&resp, 0, sizeof(resp));
 	}
 
-	// clear everything but the persistant data
+	// clear everything but the persistent data
 	saved = client->pers;
 	memset (client, 0, sizeof(*client));
 	client->pers = saved;
@@ -2575,7 +2578,7 @@ void PutClientInServer (edict_t *ent)
 	//pbowens: this caused telefrags
 /*
 	if (!KillBox (ent))
-	{	// could't spawn in?
+	{	// couldn't spawn in?
 
 	}
 */
@@ -2748,7 +2751,7 @@ void ClientBegin (edict_t *ent)
 	else
 	{
 		// a spawn point will completely reinitialize the entity
-		// except for the persistant data that was initialized at
+		// except for the persistent data that was initialized at
 		// ClientConnect() time
 		G_InitEdict (ent);
 		ent->classname = "private";
@@ -4558,7 +4561,7 @@ void ClientBeginServerFrame (edict_t *ent)
 	if (level.framenum > (10 * (int)(level_wait->value  + delay))  &&
 	(ent->client->limbo_mode) &&
 	(ent->leave_limbo_time < level.time) &&
-	(ent->client->menu == 0))  // so you dont spawn while choosing a class
+	(ent->client->menu == 0))  // so you don't spawn while choosing a class
 	{
 		if (ent->client->resp.team_on)
 		{
@@ -4627,7 +4630,7 @@ void Write_Player_Stats (edict_t *ent)
 		return;
 
 
-	//dont count maps that end really fast
+	//don't count maps that end really fast
 //	if (level.time < 60)
 //		return;
 
