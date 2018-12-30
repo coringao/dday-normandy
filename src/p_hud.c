@@ -27,6 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
+#pragma GCC diagnostic ignored "-Wint-to-pointer-cast"
+#pragma GCC diagnostic ignored "-Wpointer-to-int-cast"
 
 /*
 ======================================================================
@@ -504,7 +506,7 @@ void DeathmatchScoreboardMessage (edict_t *ent, edict_t *killer)
 		}
 		else
 		{
-			strcpy(victory_adj,"Definate");
+			strcpy(victory_adj,"Definite");
 			strcpy(victory_type,"Loss");
 		}
 
