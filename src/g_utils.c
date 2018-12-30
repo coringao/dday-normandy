@@ -29,6 +29,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
+#pragma GCC diagnostic ignored "-Wint-to-pointer-cast"
+#pragma GCC diagnostic ignored "-Wpointer-to-int-cast"
+
 void change_stance(edict_t *self, int stance);
 void ClientUserinfoChanged (edict_t *ent, char *userinfo);
 
@@ -767,7 +770,7 @@ void centerprintall (char *mesg, ...)
 	len = vsprintf (buffer, mesg, argptr);
 	va_end (argptr);
 
-	// erm this should never happen at all but it's here incase
+	// erm this should never happen at all but it's here in case
 	if (len >= size)
 		Com_Printf ("centerprintall: overflow of %i in %i\n", len, size);
 
