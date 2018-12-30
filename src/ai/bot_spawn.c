@@ -649,7 +649,7 @@ void BOT_DMClass_JoinGame (edict_t *ent, char *team_name)
 	}
 
 //	if (!KillBox (ent))
-//	{	// could't spawn in?
+//	{	// couldn't spawn in?
 //	}
 	gi.linkentity (ent);
 
@@ -826,9 +826,10 @@ void BOT_RemoveBot(char *name, edict_t *botremove)
 			meansOfDeath = MOD_SUICIDE;
 			player_die (bot, bot, bot, 100000, vec3_origin);
 
-			bot->solid = SOLID_NOT; 
-			bot->svflags |= SVF_NOCLIENT; 
-			bot->takedamage = DAMAGE_NO;
+
+//			bot->solid = SOLID_NOT; 
+//			bot->svflags |= SVF_NOCLIENT; 
+//			bot->takedamage = DAMAGE_NO;
 
 			// don't even bother waiting for death frames
 			bot->deadflag = DEAD_DEAD;
