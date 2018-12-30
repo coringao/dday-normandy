@@ -172,6 +172,9 @@ void G_FreeAI( edict_t *ent )
 
 	gi.TagFree (ent->ai);
 	ent->ai = NULL;
+
+	G_FreeEdict (ent);
+
 }
 
 //==========================================
@@ -210,7 +213,7 @@ void AI_SetUpMoveWander( edict_t *ent )
 //==========================================
 void AI_ResetWeights(edict_t *ent)
 {
-	//restore defaults from bot persistant
+	//restore defaults from bot persistent
 //	memset(ent->ai->status.inventoryWeights, 0, sizeof (ent->ai->status.inventoryWeights));
 //	memcpy(ent->ai->status.inventoryWeights, ent->ai->pers.inventoryWeights, sizeof(ent->ai->pers.inventoryWeights));
 }
@@ -862,7 +865,7 @@ void AI_PickShortRangeGoal(edict_t *self)
 	}
 
 
-	// look for a target (should make more efficent later)
+	// look for a target (should make more efficient later)
 	target = findradius(NULL, self->s.origin, AI_GOAL_SR_RADIUS);
 
 	while(target)
@@ -1015,7 +1018,7 @@ float infrontdegree (edict_t *self, edict_t *other);
 edict_t *FindOverlap(edict_t *ent, edict_t *last_overlap);
 //==========================================
 // AI_Think
-// think funtion for AIs
+// think function for AIs
 //==========================================
 void AI_Think (edict_t *self)
 {

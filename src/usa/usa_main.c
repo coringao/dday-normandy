@@ -37,7 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 // pbowens: this is a new function initiated within the DLL for those team specific
-//			game elements that arent items yet still need precaching (models)
+//			game elements that aren't items yet still need precaching (models)
 void USA_UserPrecache(void) 
 {
 

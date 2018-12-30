@@ -159,7 +159,7 @@ void P_DamageFeedback (edict_t *player)
 	if (count < 10)
 		count = 10;	// always make a visible effect
 
-	// play an apropriate pain sound
+	// play an appropriate pain sound
 	if ((level.time > player->pain_debounce_time) && !(player->flags & FL_GODMODE) && (client->invincible_framenum <= level.framenum))
 	{
 
@@ -314,7 +314,7 @@ void P_ExplosionEffects (edict_t *player)
 		// All this could probably be replaced with a simple sin/cosin function
 		// however, i'm lacking the ambition to actually figure it out
 
-		// if it aint broke dont fix it
+		// if it aint broke don't fix it
 
 		if (frame > SWAY_START) {
 			if (player->client->dmgef_sway_value == 999) { // recently modified
@@ -326,7 +326,7 @@ void P_ExplosionEffects (edict_t *player)
 			// This causes the views to go back and forth 
 			switch (player->client->dmgef_sway_switch) 
 			{
-			case 0: // unset, continue the patern defined above
+			case 0: // unset, continue the pattern defined above
 				player->client->dmgef_sway_switch		= 
 					player->client->dmgef_sway_value	= 
 						(intensity % 2) ? 1 : -1;
@@ -346,7 +346,7 @@ void P_ExplosionEffects (edict_t *player)
 					player->client->dmgef_sway_switch = 1;	// go positive
 
 				break;
-			default: // erroneous sway value, dont bother
+			default: // erroneous sway value, don't bother
 				return;
 				break;
 			}
@@ -354,7 +354,7 @@ void P_ExplosionEffects (edict_t *player)
 
 		/* pbowens
 			I know this looks complicated, and it is,  but after some digestion you can get the hang of it.
-			Oh yeah, and I DIDNT USE ANY ADVANCED MATH !!
+			Oh yeah, and I DIDN'T USE ANY ADVANCED MATH !!
 			(but rez did)
 
 			PITCH:	1) initial frame is large jolt for explosion (intensity is a good value)
@@ -367,7 +367,7 @@ void P_ExplosionEffects (edict_t *player)
 			ROLL:	1) initially (first 3 frames) help out with jolt based on intensity
 					2) afterwards, help out with the sway by complimenting the yaw in a lesser degree
 
-			Thats it.
+			That's it.
 		*/
 
 		// rezmoth - proof of concept
@@ -509,7 +509,7 @@ void SV_CalcViewOffset (edict_t *ent)
 		VectorCopy (ent->client->kick_angles, angles);
 
 		//faf:  separated kick_angles and explosion_angles calculations so explosions
-		//      dont screw up the smg kick
+		//      don't screw up the smg kick
 		VectorAdd (angles, ent->client->explosion_angles, angles);
 
 
@@ -578,7 +578,7 @@ void SV_CalcViewOffset (edict_t *ent)
 
 /*
 faf:  this mades it so people's view turns in a circle instead of on a pin point.
-       some people didnt like it so removing it.*/
+       some people didn't like it so removing it.*/
 /*
   VectorCopy (v, anglesave);
 
@@ -1057,7 +1057,7 @@ void SV_CalcBlend (edict_t *ent)
 //faf:  cause damage to whatever you fall on
 void Damage_Underneath ( edict_t *self, int damage)
 {    
-    trace_t tr; //detect whats in front of you up to range "vec3_t end"
+    trace_t tr; //detect what's in front of you up to range "vec3_t end"
     vec3_t end, start;
 	vec3_t down = { 0, 0, -1};
 

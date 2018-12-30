@@ -814,7 +814,7 @@ void Touch_Item (edict_t *ent, edict_t *other, cplane_t *plane, csurface_t *surf
 		return;
 
 //faf	if (ent->item->position != LOC_GRENADES && ent->count > 1 &&
-//faf		other->client->pers.inventory[ITEM_INDEX(ent->item)] ) // dont pick up if ammo already
+//faf		other->client->pers.inventory[ITEM_INDEX(ent->item)] ) // don't pick up if ammo already
 //faf		return;
 
 	taken = ent->item->pickup(ent, other);
@@ -875,7 +875,7 @@ static void drop_make_touchable (edict_t *ent)
 	ent->touch = Touch_Item;
 	if (deathmatch->value)
 	{
-		if (strcmp(ent->classname, "briefcase"))//if it's briefcase, dont remove it.  //faf: ctb code
+		if (strcmp(ent->classname, "briefcase"))//if it's briefcase, don't remove it.  //faf: ctb code
 		{
 			ent->nextthink = level.time + 29;
 			ent->think = G_FreeEdict;
@@ -1108,7 +1108,7 @@ void PrecacheItem (gitem_t *it)
 			PrecacheItem (ammo);
 	}
 
-	// parse the space seperated precache string for other items
+	// parse the space separated precache string for other items
 	s = it->precaches;
 	if (!s || !s[0])
 		return;
@@ -1962,7 +1962,7 @@ void Weapon_Sandbag (edict_t *ent)
 	edict_t	*sandbag;
 	trace_t		tr;
 	vec3_t	end,forward,right,offset,start;
-		float ang;
+		float angl;
 
 	if (ent->client->aim)
 	{
@@ -1998,19 +1998,19 @@ void Weapon_Sandbag (edict_t *ent)
 
 
 
-		ang = ent->s.angles[1];
+		angl = ent->s.angles[1];
 
-		if (ang > 45 && ang < 135){
+		if (angl > 45 && angl < 135){
 			sandbag->s.angles[1] = 90;
 			VectorSet (sandbag->mins, -19, -9, -10);
 			VectorSet (sandbag->maxs, 19, 9, 8);
 		}
-		else if (ang >=135 || ang <= -135){
+		else if (angl >=135 || angl <= -135){
 			sandbag->s.angles[1] = 180;
 			VectorSet (sandbag->mins, -9, -19, -10);
 			VectorSet (sandbag->maxs, 9, 19, 8);
 		}
-		else if (ang < -35){
+		else if (angl < -35){
 			sandbag->s.angles[1] = 270;
 			VectorSet (sandbag->mins, -19, -9, -10);
 			VectorSet (sandbag->maxs, 19, 9, 8);

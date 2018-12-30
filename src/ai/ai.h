@@ -59,7 +59,7 @@ typedef struct
 
 typedef struct
 {
-	ai_pers_t		pers;			//persistant definition (class?)
+	ai_pers_t		pers;			//persistent definition (class?)
 	ai_status_t		status;			//player (bot, NPC) status for AI frame
 
 	qboolean		is_bot;			//used for fakeclient classname determination

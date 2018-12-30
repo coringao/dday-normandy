@@ -183,7 +183,7 @@ void Give_Class_Weapon(edict_t *ent)
 		if(item=FindItem(client->resp.team_on->mos[client->resp.mos]->weapon2))
 		client->pers.inventory[ITEM_INDEX(item)]=1;
 
-	// Loads secondary weapon, if existant, when spawning
+	// Loads secondary weapon, if existent, when spawning
 	if (item)
 	{
 		ammo_item = FindItem(item->ammo);

@@ -769,7 +769,7 @@ void BOT_DMclass_ChooseWeapon(edict_t *self)
 	if(dist < 150)
 		weapon_range = AIWEAP_MELEE_RANGE;
 
-	else if(dist < 500)	//Medium range limit is Grenade Laucher range
+	else if(dist < 500)	//Medium range limit is Grenade Launcher range
 		weapon_range = AIWEAP_SHORT_RANGE;
 
 	else if(dist < 900)
@@ -1476,7 +1476,7 @@ if (self->client->pers.weapon->classnameb == WEAPON_PIAT  && self->enemy)
 		}
 	}	
 	//delay initial fire attempt
-	else if (self->client->pers.weapon->classnameb == WEAPON_MORPHINE || (randnum == 1  //add random element so player cant keep ducking in and out to avoid being hit
+	else if (self->client->pers.weapon->classnameb == WEAPON_MORPHINE || (randnum == 1  //add random element so player can't keep ducking in and out to avoid being hit
 		|| weapon == WEAP_MELEE || weapon == WEAP_FLAMER))
 	{
 		ucmd->buttons = BUTTON_ATTACK;
@@ -1556,7 +1556,7 @@ void BOT_DMclass_WeightPlayers(edict_t *self)
 		{
 			if( AIEnemies[i]->client->resp.ctf_team != self->client->resp.ctf_team )
 			{
-				//being at enemy team gives a small weight, but weight afterall
+				//being at enemy team gives a small weight, but weight after all
 				self->ai->status.playersWeights[i] = 0.2;
 
 				//enemy has redflag
@@ -1639,7 +1639,7 @@ void BOT_DMclass_WeightInventory(edict_t *self)
 
 	client = self->client;
 
-	//reset with persistant values
+	//reset with persistent values
 	memcpy(self->ai->status.inventoryWeights, self->ai->pers.inventoryWeights, sizeof(self->ai->pers.inventoryWeights));
 	
 
@@ -1749,7 +1749,7 @@ void BOT_DMclass_WeightInventory(edict_t *self)
 
 		wantedFlag = BOT_DMclass_WantedFlag( self ); //Returns the flag gitem_t
 		
-		//flags have weights defined inside persistant inventory. Remove weight from the unwanted one/s.
+		//flags have weights defined inside persistent inventory. Remove weight from the unwanted one/s.
 		if (blueflag && blueflag != wantedFlag)
 			self->ai->status.inventoryWeights[ITEM_INDEX(blueflag)] = 0.0;
 		if (redflag && redflag != wantedFlag)
@@ -1916,7 +1916,7 @@ void BOT_DMclass_RunFrame( edict_t *self )
 
 //==========================================
 // BOT_DMclass_InitPersistant
-// Persistant after respawns. 
+// Persistent after respawns. 
 //==========================================
 void BOT_DMclass_InitPersistant(edict_t *self)
 {
@@ -1937,7 +1937,7 @@ void BOT_DMclass_InitPersistant(edict_t *self)
 	//available moveTypes for this class
 	self->ai->pers.moveTypesMask = (LINK_MOVE|LINK_STAIRS|LINK_FALL|LINK_WATER|LINK_WATERJUMP|LINK_JUMPPAD|LINK_PLATFORM|LINK_TELEPORT|LINK_LADDER|LINK_JUMP|LINK_CROUCH);
 
-	//Persistant Inventory Weights (0 = can not pick)
+	//Persistent Inventory Weights (0 = can not pick)
 	memset(self->ai->pers.inventoryWeights, 0, sizeof (self->ai->pers.inventoryWeights));
 
 	//weapons

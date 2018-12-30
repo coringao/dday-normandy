@@ -314,7 +314,7 @@ void Spawn_Chute_Special(edict_t *ent)
 
 
 //this function exits observer mode, presumably after they have chosen mos. They must have
-//joined a team, if one is avaiable...
+//joined a team, if one is available...
 
 void Find_Mission_Start_Point(edict_t *ent, vec3_t origin, vec3_t angles);
 
@@ -890,7 +890,7 @@ void M_Team_Join(edict_t *ent, pmenu_t *p, int choice)
 		l = PlayerCountForTeam (0, false);
 		m = PlayerCountForTeam (1, false);
 
-		//faf:  if theyre already on a team subtract them from the total
+		//faf:  if they're already on a team subtract them from the total
 		if (ent->client->resp.team_on &&
 			ent->client->resp.team_on->index == 0)
 			i--;
@@ -1034,7 +1034,7 @@ void ChooseTeam(edict_t *ent) {
 	// Eliminates ghost-bug
 	if ((ent->client->limbo_mode || ent->deadflag) && ent->client->resp.team_on)
 	{
-		safe_centerprintf(ent, "You must wait for your next assignment\nto change teams!");
+		safe_centerprintf(ent, "You must wait for your next assignment \n to change teams!");
 		return;
 	}
 

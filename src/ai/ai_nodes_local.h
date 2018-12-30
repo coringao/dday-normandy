@@ -80,7 +80,7 @@ typedef struct
 	nav_ents_t	ents[MAX_EDICTS];	//plats, etc
 
 	int			num_broams;
-	nav_broam_t	broams[MAX_BOT_ROAMS];	//list of nodes wich are botroams
+	nav_broam_t	broams[MAX_BOT_ROAMS];	//list of nodes which are botroams
 
 } ai_navigation_t;
 

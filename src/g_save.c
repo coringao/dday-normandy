@@ -278,7 +278,7 @@ void InitGame (void)
 	level_wait			=	gi.cvar("level_wait",			"20",  CVAR_SERVERINFO);
 	invuln_spawn		=	gi.cvar("invuln_spawn",			"3", 0);//CVAR_SERVERINFO);
 
-	// artillary
+	// artillery
 	arty_delay			=	gi.cvar("arty_delay",			"10", 0);
 	arty_time			=	gi.cvar("arty_time",			"60", 0);
 	arty_max			=	gi.cvar("arty_max",				"1",  0);
@@ -302,7 +302,7 @@ void InitGame (void)
 
 
 
-	gi.cvar ("dll_version", "Dday 5.063",  CVAR_SERVERINFO | CVAR_LATCH); //faf
+	gi.cvar ("dll_version", "Dday 5.065c",  CVAR_SERVERINFO | CVAR_LATCH); //faf
 
 	gi.cvar ("website", "http://www.DdayDev.com",  CVAR_SERVERINFO | CVAR_LATCH); //faf
 

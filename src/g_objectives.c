@@ -84,7 +84,7 @@ void objective_area_think (edict_t *self) {
 		self->obj_owner = team_list[newteam]->index;
 		team_list[self->obj_owner]->score += self->obj_gain;
 
-		if (team_list[self->obj_owner]->time_to_win) // If there already is a counter somwhere else
+		if (team_list[self->obj_owner]->time_to_win) // If there already is a counter somewhere else
 		{
 			if (team_list[self->obj_owner]->time_to_win > (self->obj_time + level.time) )
 			// If the counter is longer, shorten it up to this one

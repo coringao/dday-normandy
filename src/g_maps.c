@@ -344,7 +344,7 @@ void Cmd_Maplist_f (edict_t *ent)
 // 
 // Svcmd_Maplist_f 
 // 
-// Main command line parsing function. Enables/parses/diables maplists. 
+// Main command line parsing function. Enables/parses/disables maplists. 
 // 
 // Args:   (none) 
 // 

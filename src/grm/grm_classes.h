@@ -40,7 +40,7 @@ typedef struct
 	int	specnum;			//number of special items given
 	mos_t	mos;			//MOS type that struct represents...
 	int		available;		//number allowed on team
-	float	normal_weight;	//normal ammount ent may carry without speed effect
+	float	normal_weight;	//normal amount ent may carry without speed effect
 	float	max_weight;		//amount of weight before player cannot stand up (-normal_weight)
 	float	speed_mod;		//class speed
 	float	marksmanship;	// %chance of greater elevation (less == better)
@@ -51,7 +51,7 @@ typedef struct
 
 SMos_t GRM_MOS_List[NUM_CLASSES]=
 {
-	{NULL}, // for NO MOS selectin
+	{NULL}, // for NO MOS selection
 	{
 		"Infantry",//"Soldat",
 		"class_infantry",

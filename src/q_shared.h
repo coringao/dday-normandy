@@ -599,10 +599,10 @@ typedef struct
 //ROGUE
 
 // entity_state_t->renderfx flags
-#define	RF_MINLIGHT			1		// allways have some light (viewmodel)
+#define	RF_MINLIGHT			1		// always have some light (viewmodel)
 #define	RF_VIEWERMODEL		2		// don't draw through eyes, only mirrors
 #define	RF_WEAPONMODEL		4		// only draw through eyes
-#define	RF_FULLBRIGHT		8		// allways draw full intensity
+#define	RF_FULLBRIGHT		8		// always draw full intensity
 #define	RF_DEPTHHACK		16		// for view weapon Z crunching
 #define	RF_TRANSLUCENT		32
 #define	RF_FRAMELERP		64
@@ -621,7 +621,7 @@ typedef struct
 //ROGUE
 
 // player_state_t->refdef flags
-#define	RDF_UNDERWATER		1		// warp the screen as apropriate
+#define	RDF_UNDERWATER		1		// warp the screen as appropriate
 #define RDF_NOWORLDMODEL	2		// used for player configuration screen
 
 //ROGUE
@@ -907,7 +907,7 @@ extern	vec3_t monster_flash_offset [];
 // temp entity events
 //
 // Temp entity events are for things that happen
-// at a location seperate from any existing entity.
+// at a location separate from any existing entity.
 // Temporary entity messages are explicitly constructed
 // and broadcast.
 typedef enum
@@ -983,7 +983,7 @@ typedef enum
 
 // sound channels
 // channel 0 never willingly overrides
-// other channels (1-7) allways override a playing sound on that channel
+// other channels (1-7) always override a playing sound on that channel
 #define	CHAN_AUTO               0
 #define	CHAN_WEAPON             1
 #define	CHAN_VOICE              2
@@ -1153,7 +1153,7 @@ ROGUE - VERSIONS
 
 
 // entity_state_t->event values
-// ertity events are for effects that take place reletive
+// ertity events are for effects that take place relative
 // to an existing entities origin.  Very network efficient.
 // All muzzle flashes really should be converted to events...
 typedef enum
@@ -1199,7 +1199,7 @@ typedef struct entity_state_s
 
 // player_state_t is the information needed in addition to pmove_state_t
 // to rendered a view.  There will only be 10 player_state_t sent each second,
-// but the number of pmove_state_t changes will be reletive to client
+// but the number of pmove_state_t changes will be relative to client
 // frame rates
 typedef struct
 {

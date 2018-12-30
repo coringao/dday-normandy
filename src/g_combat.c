@@ -486,7 +486,7 @@ int Damage_Loc(edict_t *targ, vec3_t point, edict_t *attacker)
 				p_angle = (atan ((y_coord)  / (x_coord))) * (360 / (2 * 3.14159)) + 180;
 			
 			//adjusts the angle according to direction player is facing
-			//this is messed and goes to -220 in the back instead of -180 but it wont matter here:
+			//this is messed and goes to -220 in the back instead of -180 but it won't matter here:
 			p_angle = p_angle - targ->client->v_angle[1];
 
 //			safe_bprintf(PRINT_HIGH, "x %f, y %f \n", x_coord, y_coord);
@@ -530,7 +530,7 @@ int Damage_Loc(edict_t *targ, vec3_t point, edict_t *attacker)
 			return CHEST_WOUND;
 //faf		} else if (point[2] > min_z + 16 && point[2] < min_z + 26) {
 		} else if (point[2] > min_z + 12 && point[2] < min_z + 19) {
-			//gi.dprintf("stomache\n");
+			//gi.dprintf("stomach\n");
 			return STOMACH_WOUND;
 //faf		} else if (point[2] < min_z + 18) {
 		} else if (point[2] < min_z + 12) {
@@ -686,7 +686,7 @@ void Drop_Shot (edict_t *ent, gitem_t *item)
 		gi.sound (ent, CHAN_BODY, gi.soundindex ("misc/drop.wav"), 1, ATTN_NORM, 0);
 		safe_centerprintf(ent, "YOU DROPPED YOUR WEAPON!!\n");
 
-		ent->s.modelindex2 = 0; //faf:  remove the weapon model immediately or it looks like theres 2
+		ent->s.modelindex2 = 0; //faf:  remove the weapon model immediately or it looks like there's 2
 	}
 }
 //bcass end
@@ -718,7 +718,7 @@ void Drop_Flamed (edict_t *ent)
 			Drop_Item (ent, item);
 			//ent->client->pers.inventory[index] = 0;
 
-			//ent->s.modelindex2 = 0; //faf:  remove the weapon model immediately or it looks like theres 2
+			//ent->s.modelindex2 = 0; //faf:  remove the weapon model immediately or it looks like there's 2
 		}
 	}
 	else if (item)
@@ -737,7 +737,7 @@ void Drop_Flamed (edict_t *ent)
 			Drop_Item (ent, item);
 			ent->client->pers.inventory[index] = 0;
 
-			ent->s.modelindex2 = 0; //faf:  remove the weapon model immediately or it looks like theres 2
+			ent->s.modelindex2 = 0; //faf:  remove the weapon model immediately or it looks like there's 2
 		}
 	}
 //	ent->client->newweapon = FindItem ("fists");
@@ -1057,7 +1057,7 @@ void T_Damage (edict_t *targ, edict_t *inflictor, edict_t *attacker, vec3_t dir,
 			// wheaty: Don't let drop shot affect Morphine/Flamethrower/Fists/Binocs
 			if(!targ->ai &&
 				randnum > DROP_SHOT && IsValidPlayer(targ) && 
-				!(targ->client->newweapon) && //faf:  if dropping/changing weap, dont hit gun
+				!(targ->client->newweapon) && //faf:  if dropping/changing weap, don't hit gun
 				targ->client->pers.weapon &&
 				targ->client->pers.weapon->position != LOC_GRENADES &&//faf
 				targ->client->pers.weapon->classname &&
@@ -1071,7 +1071,7 @@ void T_Damage (edict_t *targ, edict_t *inflictor, edict_t *attacker, vec3_t dir,
 				}
 //bcass end
 
-			else//faf:  dont do damage if dropping weapon
+			else//faf:  don't do damage if dropping weapon
 			{
 				damage*=2;//1.1;
 				//if(targ->client) safe_cprintf(targ,PRINT_HIGH,"You've been hit in the chest!\n");
@@ -1175,7 +1175,7 @@ void T_Damage (edict_t *targ, edict_t *inflictor, edict_t *attacker, vec3_t dir,
 				//Wheaty: This was missing, for some reason :p
 					wound_location |= HEAD_WOUND;
 
-				// Dont fade if death from headshot
+				// Don't fade if death from headshot
 					targ->client->resp.deathblend = 1;
 				}
 				else
@@ -1312,7 +1312,7 @@ void T_Damage (edict_t *targ, edict_t *inflictor, edict_t *attacker, vec3_t dir,
 
 	VectorNormalize(dir);
 
-// bonus damage for suprising a monster
+// bonus damage for surprising a monster
 	//faf: get rid of this?
 	if (!(dflags & DAMAGE_RADIUS) && (targ->svflags & SVF_MONSTER) && attacker && (attacker->client) && (!targ->enemy) && (targ->health > 0))
 		damage *= 2;
@@ -1688,7 +1688,7 @@ void SprayBlood(edict_t *self, vec3_t point, vec3_t angle, int damage, int mod)
 	}
 }
 
-// pbowens: since we cant actually tell when an explosion happens, call this after the WriteByte
+// pbowens: since we can't actually tell when an explosion happens, call this after the WriteByte
 void SetExplosionEffect (edict_t *inflictor, float damage, float radius) 
 {
 //	int		j;

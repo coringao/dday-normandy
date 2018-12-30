@@ -40,9 +40,6 @@ typedef struct g_cmds_s
     void (*cmdfunc)();
 } g_cmds_t;
 
-
-
-
 void InsertCmds(g_cmds_t *cmds, int numCmds, char *src);
 void CleanUpCmds();
 g_cmds_t *FindCommand(char *cmd);
@@ -84,7 +81,6 @@ void Cmd_Medic_Call_f(edict_t *ent);
 void Cmd_MOTD(edict_t *ent);
 void Cmd_Arty_f (edict_t *ent);
 void Cmd_Objectives_Toggle (edict_t *ent);
-
 
 #define NUM_ID_CMDS     48	
 g_cmds_t id_GameCmds[NUM_ID_CMDS];

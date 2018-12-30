@@ -101,7 +101,7 @@ float AI_Distance( vec3_t o1, vec3_t o2 )
 //AI_findNodeInRadius
 //
 // Copy of findradius to act with nodes instead of entities
-// Setting up ignoreHeight uses a cilinder instead of a sphere (used to catch fall links)
+// Setting up ignoreHeight uses a cylinder instead of a sphere (used to catch fall links)
 //=================
 int AI_findNodeInRadius (int from, vec3_t org, float rad, qboolean ignoreHeight)
 {

@@ -298,7 +298,7 @@ void M_default_WeightPlayers(edict_t *self)
 //==========================================
 void M_default_WeightInventory(edict_t *self)
 {
-	//reset with persistant values
+	//reset with persistent values
 	memcpy(self->ai->status.inventoryWeights, self->ai->pers.inventoryWeights, sizeof(self->ai->pers.inventoryWeights));
 }
 
@@ -641,7 +641,7 @@ void M_default_RunFrame( edict_t *self )
 
 //==========================================
 // M_default_InitPersistant
-// Persistant after respawns.
+// Persistent after respawns.
 //==========================================
 void M_default_InitPersistant(edict_t *self)
 {
@@ -661,7 +661,7 @@ void M_default_InitPersistant(edict_t *self)
 	//available moveTypes for this class
 	self->ai->pers.moveTypesMask = (LINK_MOVE|LINK_STAIRS|LINK_WATER|LINK_WATERJUMP);
 
-	//Persistant Inventory Weights (0 = can not pick)
+	//Persistent Inventory Weights (0 = can not pick)
 	memset(self->ai->pers.inventoryWeights, 0, sizeof (self->ai->pers.inventoryWeights));
 }
 
@@ -751,7 +751,7 @@ void M_default_Spawn (void)
 	ent->s.angles[ROLL] = 0;
 
 	if (!KillBox (ent))
-	{	// could't spawn in?
+	{	// couldn't spawn in?
 	}
 	gi.linkentity (ent);
 

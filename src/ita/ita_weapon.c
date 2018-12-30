@@ -445,7 +445,7 @@ void Weapon_K43_Fire (edict_t *ent)
 			ent->client->kick_angles[0] = -3;
 	}
 
-	/*faf:  this  doesnt really add anything to the game
+	/*faf:  this  doesn't really add anything to the game
 	if(ent->client->mags[mag_index].lmg_rnd==1)
 	{
 		//Hard coded for reload only.

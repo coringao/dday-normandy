@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* user definable variables 
 
-	arty_delay  -- seconds for artillary to position           default: 10 
+	arty_delay  -- seconds for artillery to position           default: 10 
 	arty_time   -- seconds between each volley                 default: 60
 	arty_max    -- number of shots to be fired in each volley  default: 1
 */
@@ -313,8 +313,8 @@ void Cmd_Arty_f (edict_t *ent)
 
 
 
-	//faf:  moving this up so you dont have to look through binocs to cancel arty
-	// make sure artillary hasn't already been called
+	//faf:  moving this up so you don't have to look through binocs to cancel arty
+	// make sure artillery hasn't already been called
 
 	
 

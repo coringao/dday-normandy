@@ -267,7 +267,7 @@ walkmove(angle, speed) primitive is all or nothing
 =============
 range
 
-returns the range catagorization of an entity reletive to self
+returns the range catagorization of an entity relative to self
 0	melee range, will become hostile even if back is turned
 1	visibility and infront, or visibility and show hostile
 2	infront and show hostile
@@ -760,7 +760,7 @@ void ai_run_missile(edict_t *self)
 =============
 ai_run_slide
 
-Strafe sideways, but stay at aproximately the same range
+Strafe sideways, but stay at approximately the same range
 =============
 */
 void ai_run_slide(edict_t *self, float distance)

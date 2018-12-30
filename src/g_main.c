@@ -74,7 +74,7 @@ cvar_t  *flyingnun_password;
 
 //KMM: 9/15  CVARS
 //cvar_t	*scope_setting;				// Sniperscope FOV
-//cvar_t	*auto_reload;				// change magazine automaticly?
+//cvar_t	*auto_reload;				// change magazine automatically?
 //cvar_t	*auto_weapon_change;		// change weapon when out of ammo?
 //cvar_t	*observer_on_death;			// if set, go to observer when dead
 //cvar_t	*heal_wounds;			// if set, health fixes chest and stomach wounds
@@ -89,7 +89,7 @@ cvar_t	*death_msg;					// when and how the death msgs are displayed
 cvar_t	*level_wait;				// pause time at beginning and end of games
 cvar_t	*invuln_spawn;				// how long player is invulnerable after spawn
 
-cvar_t	*arty_delay;				// seconds for artillary to position
+cvar_t	*arty_delay;				// seconds for artillery to position
 cvar_t	*arty_time;					// seconds between each volley 
 cvar_t  *arty_max;					// number of shots to be fired in each volley
 
@@ -789,7 +789,7 @@ void EndDMLevel (void)
 			// seps stays same
 
 
-			if (t == NULL) //faf:  happens when running a map thats not on maplist and map is to change
+			if (t == NULL) //faf:  happens when running a map that's not on maplist and map is to change
 			{
 				//let it stay off maplist until a map on the maplist is changed to
 				if (team_list[0]->nextmap && MapExists(team_list[0]->nextmap))
