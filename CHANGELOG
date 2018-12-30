@@ -1,3 +1,15 @@
+**version: 5.3.0**
+  * Initial sources copied from 'ddaydev.com'
+  * Added game data (dday)
+  * Fixed some warnings reported
+  * Added source file q2admin and q2pro
+  * Added icon in format (PNG) size 150 pixels
+  * Created the game manpage
+  * Created dedicated server manpage
+  * Fixed spelling in some files
+  * Fixed default game setting
+
+=== Last Changelog ===
 CTC v.04:
 -added 3rd person animation for:
   bayonet slashing
