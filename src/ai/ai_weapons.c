@@ -40,7 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //==========================================
 // AI_InitAIWeapons
 // 
-// AIWeapons are the way the AI uses to analize
+// AIWeapons are the way the AI uses to analyze
 // weapon types, for choosing and fire them
 //==========================================
 void AI_InitAIWeapons (void)
@@ -124,13 +124,13 @@ void AI_InitAIWeapons (void)
 	AIWeapons[WEAP_FLAMER].ammoItem = NULL;//FindItemByClassname("ammo_slugs");
 
 	//WEAP_MELEE
-	AIWeapons[WEAP_MELEE].aimType = AI_AIMSTYLE_INSTANTHIT;
-	AIWeapons[WEAP_MELEE].RangeWeight[AIWEAP_LONG_RANGE] = 0.0;
-	AIWeapons[WEAP_MELEE].RangeWeight[AIWEAP_MEDIUM_RANGE] = 0.0;
-	AIWeapons[WEAP_MELEE].RangeWeight[AIWEAP_SHORT_RANGE] = 0.0;
-	AIWeapons[WEAP_MELEE].RangeWeight[AIWEAP_MELEE_RANGE] = 0.9;
-	AIWeapons[WEAP_MELEE].weaponItem = NULL;//FindItemByClassname("weapon_railgun");
-	AIWeapons[WEAP_MELEE].ammoItem = NULL;//FindItemByClassname("ammo_slugs");
+	//AIWeapons[WEAP_MELEE].aimType = AI_AIMSTYLE_INSTANTHIT;
+	//AIWeapons[WEAP_MELEE].RangeWeight[AIWEAP_LONG_RANGE] = 0.0;
+	//AIWeapons[WEAP_MELEE].RangeWeight[AIWEAP_MEDIUM_RANGE] = 0.0;
+	//AIWeapons[WEAP_MELEE].RangeWeight[AIWEAP_SHORT_RANGE] = 0.0;
+	//AIWeapons[WEAP_MELEE].RangeWeight[AIWEAP_MELEE_RANGE] = 0.9;
+	//AIWeapons[WEAP_MELEE].weaponItem = NULL;//FindItemByClassname("weapon_railgun");
+	//AIWeapons[WEAP_MELEE].ammoItem = NULL;//FindItemByClassname("ammo_slugs");
 
 }
 
