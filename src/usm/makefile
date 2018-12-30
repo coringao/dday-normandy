@@ -24,7 +24,7 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-ARCH=x86_64
+ARCH=$(shell uname -m)
 CC=gcc
 BASE_CFLAGS=-Dstricmp=strcasecmp -I..
 
@@ -69,6 +69,7 @@ usm$(ARCH).$(SHLIBEXT) : $(GAME_OBJS)
 
 clean:
 	-rm -f $(GAME_OBJS)
+	-rm -f usm$(ARCH).$(SHLIBEXT)
 
 depend:
 	gcc -MM $(GAME_OBJS:.o=.c)
