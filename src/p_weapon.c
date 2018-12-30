@@ -30,6 +30,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_local.h"
 #include "m_player.h"
 
+#pragma GCC diagnostic ignored "-Wimplicit-int"
+
 /*-----/ PM /-----/ NEW:  Include new header files. /-----*/
 #include "x_fbomb.h"
 #include "x_fire.h"
@@ -447,7 +449,7 @@ void ShowGun( edict_t *ent)
 	{
 		ent->s.modelindex2 = gi.modelindex (va("players/%s/%s.md2", weap_team, pszIcon));//faf
 	}
-	else  //this shouldnt happen...
+	else  //this shouldn't happen...
 		ent->s.modelindex2 = gi.modelindex (va("players/%s/%s.md2", ent->client->resp.team_on->playermodel, pszIcon));
 //	}
 //	safe_cprintf(ent, PRINT_HIGH, "%s.\n", weap_team);
@@ -466,7 +468,7 @@ void ChangeWeapon (edict_t *ent)
 		ent->client->grenade_time = 0;
 	}
 */
-	// pbowens: dont switch weapons if live grenade
+	// pbowens: don't switch weapons if live grenade
 	if (ent->client->newweapon && 
 		((ent->client->grenade	&& ent->client->newweapon->position != LOC_GRENADES && !ent->client->grenade_index) ||
 		 (ent->client->tnt		&& ent->client->newweapon->position != LOC_TNT)		) )
@@ -739,7 +741,7 @@ void Drop_Weapon (edict_t *ent, gitem_t *item)
 
 	        //faf:  changed a bit for team dll support:
 
-        //faf:  gonna leave this in for grm mauser/sniper using same ammo
+        //faf:  going to leave this in for grm mauser/sniper using same ammo
         if (!strcmp(item->ammo, "mauser98k_mag"))  // Both Rifle and Sniper ammo
         {
                 item_rounds = ent->client->mags[1].rifle_rnd + ent->client->mags[1].sniper_rnd;
@@ -754,7 +756,7 @@ void Drop_Weapon (edict_t *ent, gitem_t *item)
                         item_rounds = ent->client->mags[1].pistol_rnd;
                         ent->client->mags[1].pistol_rnd = 0;
                 }
-        //faf:  small bug below here:  Sniper ammo will work properly, rifle wont... (if they use the same ammo)
+        //faf:  small bug below here:  Sniper ammo will work properly, rifle won't... (if they use the same ammo)
                 else if (item->position == LOC_RIFLE)
                 {
                         item_rounds = ent->client->mags[1].rifle_rnd + ent->client->mags[1].sniper_rnd;
@@ -824,7 +826,7 @@ void Drop_Weapon (edict_t *ent, gitem_t *item)
                 item_rounds = ent->client->mags[0].antitank_rnd;
                 ent->client->mags[0].antitank_rnd = 0;
                 }
-        //faf:  small bug below here:  Sniper ammo will work properly, rifle wont... (if they use same ammo)
+        //faf:  small bug below here:  Sniper ammo will work properly, rifle won't... (if they use same ammo)
                 else if (item->position == LOC_SNIPER)
                 {
                         item_rounds = ent->client->mags[0].sniper_rnd + ent->client->mags[0].rifle_rnd;
@@ -1068,7 +1070,7 @@ void Weapon_Grenade (edict_t *ent)
 		if ( ((ent->client->latched_buttons|ent->client->buttons) & BUTTON_ATTACK) )
 		{
 			/*
-				// dont work in water, jimmy
+				// don't work in water, jimmy
 				if (ent->waterlevel == 3)
 				{
 					ent->client->weaponstate = WEAPON_READY;
@@ -1298,7 +1300,7 @@ fire_knife
 qboolean Cmd_Scope_f(edict_t *ent);
 void fire_Knife ( edict_t *self, vec3_t start, vec3_t aimdir, int damage, int kick, char *wav, qboolean fists)
 {    
-    trace_t tr; //detect whats in front of you up to range "vec3_t end"
+    trace_t tr; //detect what's in front of you up to range "vec3_t end"
 
     vec3_t end;
 
@@ -1560,7 +1562,7 @@ void Blade_touch(edict_t *self, edict_t *other, cplane_t *plane, csurface_t *sur
 		
 
 	}
-	else //faf:  so knife doesnt float when it destroys an objective
+	else //faf:  so knife doesn't float when it destroys an objective
 	{
 		self->think = Knife_Drop;
 		self->nextthink = level.time + .1;
@@ -2692,7 +2694,7 @@ void Weapon_TNT (edict_t *ent)
 		if ( ((ent->client->latched_buttons|ent->client->buttons) & BUTTON_ATTACK) )
 		{
 			/*
-				// dont work in water, jimmy
+				// don't work in water, jimmy
 				if (ent->waterlevel == 3)
 				{
 					ent->client->weaponstate = WEAPON_READY;
