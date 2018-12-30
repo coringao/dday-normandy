@@ -26,6 +26,7 @@ in NO WAY supported by Steve Yeager.
 #include "../g_local.h"
 #include "ai_local.h"
 
+#pragma GCC diagnostic ignored "-Wpointer-to-int-cast"
 
 //ACE
 
@@ -774,7 +775,7 @@ int AI_IsPlatformLink( int n1, int n2 )
 			
 			trace_t	trace;
 			float	heightdiff;
-			//n1 is plat upper: it can link to visibles at same height
+			//n1 is plat upper: it can link to visible at same height
 			trace = gi.trace( nodes[n1].origin, vec3_origin, vec3_origin, nodes[n2].origin, n1ent, MASK_NODESOLID );
 			if (trace.fraction == 1.0 && !trace.startsolid) 
 			{
