@@ -28,6 +28,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_local.h"
 #include "g_cmds.h"
 
+#pragma GCC diagnostic ignored "-Wimplicit-int"
+#pragma GCC diagnostic ignored "-Wswitch-unreachable"
+#pragma GCC diagnostic ignored "-Wimplicit-function-declaration"
+
 // g_ents.c
 // D-Day: Normandy Old / Unsorted Entities
 
@@ -52,7 +56,7 @@ int Last_Team_Winner=99;
 
 //count is total number required...
 //heath is the mission number (0 defence, 1 offence, 2 patrol)
-//dmg is the ammount of pointes added to the team
+//dmg is the amount of pointes added to the team
 //delay is the time to win before the game is won
 
 
@@ -157,7 +161,7 @@ void SP_info_Mission_Results(edict_t *ent)
 void target_objective_use(edict_t *self, edict_t *other, edict_t *activator)
 {
 	if(self->obj_owner==activator->client->resp.team_on->index)
-		return; // if team already in possesion, continue
+		return; // if team already in possession, continue
 
 	if(team_list[self->obj_owner]!=NULL)
 		team_list[self->obj_owner]->score-=self->dmg;
@@ -645,7 +649,7 @@ void SP_info_team_start(edict_t *ent)
 			strcpy (team_list[1]->nextmap, team_list[0]->nextmap);
 		}
 
-		//so we dont get stuck
+		//so we don't get stuck
 
 	}*/
 
