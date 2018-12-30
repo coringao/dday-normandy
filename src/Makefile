@@ -24,8 +24,7 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-#ARCH=i386
-ARCH=x86_64
+ARCH=$(shell uname -m)
 CC=gcc
 BASE_CFLAGS=-Dstricmp=strcasecmp
 
@@ -51,10 +50,10 @@ SHLIBLDFLAGS=-shared
 DO_CC=$(CC) $(CFLAGS) $(SHLIBCFLAGS) -o $@ -c $<
 
 build_debug:
-	$(MAKE) game$(ARCH).$(SHLIBEXT) CFLAGS="$(CFLAGS_DEBUG)"
+	$(MAKE) game$(ARCH).real.$(SHLIBEXT) CFLAGS="$(CFLAGS_DEBUG)"
 
 build_release:
-	$(MAKE) game$(ARCH).$(SHLIBEXT) CFLAGS="$(CFLAGS_RELEASE)"
+	$(MAKE) game$(ARCH).real.$(SHLIBEXT) CFLAGS="$(CFLAGS_RELEASE)"
 
 #############################################################################
 # SETUP AND BUILD
@@ -104,36 +103,32 @@ GAME_OBJS =	\
 	u_entmgr.o \
 	x_fbomb.o \
 	x_fire.o \
-	usa/usa_item.o  usa/usa_spawn.o usa/usa_guninfo.o usa/usa_weapon.o usa/usa_main.o \
-        grm/grm_item.o  grm/grm_spawn.o grm/grm_guninfo.o grm/grm_weapon.o grm/grm_main.o \
-        rus/rus_item.o  rus/rus_spawn.o rus/rus_guninfo.o rus/rus_weapon.o rus/rus_main.o \
-        gbr/gbr_item.o  gbr/gbr_spawn.o gbr/gbr_guninfo.o gbr/gbr_weapon.o gbr/gbr_main.o \
-        jpn/jpn_item.o  jpn/jpn_spawn.o jpn/jpn_guninfo.o jpn/jpn_weapon.o jpn/jpn_main.o \
-        usm/usm_item.o  usm/usm_spawn.o usm/usm_guninfo.o usm/usm_weapon.o usm/usm_main.o \
-        ita/ita_item.o  ita/ita_spawn.o ita/ita_guninfo.o ita/ita_weapon.o ita/ita_main.o \
-        pol/pol_item.o  pol/pol_spawn.o pol/pol_guninfo.o pol/pol_weapon.o pol/pol_main.o \
+	usa/usa_item.o  usa/usa_spawn.o usa/usa_guninfo.o usa/usa_weapon.o \
+	usa/usa_main.o  grm/grm_main.o  rus/rus_main.o  gbr/gbr_main.o \
+	jpn/jpn_main.o  usm/usm_main.o  ita/ita_main.o  pol/pol_main.o \
+        grm/grm_item.o  grm/grm_spawn.o grm/grm_guninfo.o grm/grm_weapon.o \
+        rus/rus_item.o  rus/rus_spawn.o rus/rus_guninfo.o rus/rus_weapon.o \
+        gbr/gbr_item.o  gbr/gbr_spawn.o gbr/gbr_guninfo.o gbr/gbr_weapon.o \
+        jpn/jpn_item.o  jpn/jpn_spawn.o jpn/jpn_guninfo.o jpn/jpn_weapon.o \
+        usm/usm_item.o  usm/usm_spawn.o usm/usm_guninfo.o usm/usm_weapon.o \
+        ita/ita_item.o  ita/ita_spawn.o ita/ita_guninfo.o ita/ita_weapon.o \
+        pol/pol_item.o  pol/pol_spawn.o pol/pol_guninfo.o pol/pol_weapon.o \
  	ai/bot_common.o ai/bot_spawn.o ai/ai_weapons.o ai/ai_tools.o \
 	ai/ai_nodes.o ai/ai_navigation.o ai/ai_movement.o ai/ai_links.o  \
 	ai/ai_items.o ai/ai_dropnodes.o ai/ai_class_dmbot.o \
 	ai/ai_class_monster_default.o ai/AStar.o ai/ai_main.o
 
-
-
 #	g_so.o # this file is a shared library thingie needed for Solaris
-game$(ARCH).$(SHLIBEXT) : $(GAME_OBJS)
+game$(ARCH).real.$(SHLIBEXT) : $(GAME_OBJS)
 	$(MAKE) usa$(ARCH).$(SHLIBEXT) -C usa
 	$(MAKE) grm$(ARCH).$(SHLIBEXT) -C grm
 # Nick - Uncomment out the next two lines if you wish to build GBR & RUS source
 	$(MAKE) rus$(ARCH).$(SHLIBEXT) -C rus	
 	$(MAKE) gbr$(ARCH).$(SHLIBEXT) -C gbr	
-
 	$(MAKE) jpn$(ARCH).$(SHLIBEXT) -C jpn	
 	$(MAKE) usm$(ARCH).$(SHLIBEXT) -C usm
-
 	$(MAKE) pol$(ARCH).$(SHLIBEXT) -C pol
 	$(MAKE) ita$(ARCH).$(SHLIBEXT) -C ita
-
-#ai
 	$(MAKE) ai$(ARCH).$(SHLIBEXT) -C ai
 
 	$(CC) $(CFLAGS) $(SHLIBLDFLAGS) -o $@ $(GAME_OBJS) $(LDFLAGS)
@@ -144,6 +139,7 @@ game$(ARCH).$(SHLIBEXT) : $(GAME_OBJS)
 
 clean:
 	-rm -f $(GAME_OBJS)
+	-rm -f game$(ARCH).real.$(SHLIBEXT)
 	$(MAKE) clean -C usa
 	$(MAKE) clean -C grm
 	$(MAKE) clean -C rus
@@ -152,9 +148,7 @@ clean:
 	$(MAKE) clean -C usm
 	$(MAKE) clean -C pol
 	$(MAKE) clean -C ita
-
 	$(MAKE) clean -C ai
-
 
 depend:
 	gcc -MM $(GAME_OBJS:.o=.c)
@@ -237,19 +231,9 @@ x_fbomb.o: x_fbomb.c g_local.h g_defines.h q_shared.h game.h p_menu.h \
 x_fire.o: x_fire.c g_local.h g_defines.h q_shared.h game.h p_menu.h \
  g_maps.h x_fire.h
 
-###adding bots to makefile
-#AStar.o: AStar.c                     
-#ai_items.c     
-#ai_items.c     
-#ai_navigation.c  
-#bot_common.c
-#ai_class_dmbot.c            
-#ai_links.c     
-#ai_nodes.c       
-#bot_spawn.c
-#ai_class_monster_default.c  
-#ai_main.c      
-#ai_tools.c
-#ai_dropnodes.c              
-#ai_movement.c  
-#ai_weapons.c
+#adding bots to makefile
+AStar.o: AStar.c ai_items.c ai_items.c ai_navigation.c bot_common.c \
+        ai_class_dmbot.c ai_links.c ai_nodes.c bot_spawn.c \
+        ai_class_monster_default.c ai_main.c ai_tools.c ai_dropnodes.c \
+        ai_movement.c ai_weapons.c
+
