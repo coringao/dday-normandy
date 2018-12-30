@@ -2,6 +2,8 @@
 #include "../g_local.h"
 #include "ai_local.h"
 
+#pragma GCC diagnostic ignored "-Wimplicit-int"
+
 //==========================================
 // 
 // 
