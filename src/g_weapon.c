@@ -27,6 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
+#pragma GCC diagnostic ignored "-Wimplicit-int"
+
 void P_ProjectSource (gclient_t *client, vec3_t point, vec3_t distance, vec3_t forward, vec3_t right, vec3_t result);
 void NoAmmoWeaponChange (edict_t *ent);
 //qboolean (*Pickup_Weapon)(edict_t *, edict_t *);
@@ -34,7 +36,7 @@ void Cmd_WeapNext_f (edict_t *ent);
 
 
 //faf:  tidies up coming out of the scope for the sniper.
-//      it wasnt showing the gun being lowered before
+//      it wasn't showing the gun being lowered before
 void check_unscope (edict_t *ent)
 {
 	if (ent->client &&
@@ -396,7 +398,7 @@ void fire_gun_old(edict_t *self, vec3_t start, vec3_t aimdir, int damage, int ki
 	// if the trace hit anything before distance termination
 	if (!(tr.fraction < 1.0))
 	{
-		// seperate the aimdir into three parts
+		// separate the aimdir into three parts
 		vectoangles(aimdir, dir);
 		AngleVectors(dir, forward, right, up);
 
@@ -1353,7 +1355,7 @@ void Shrapnel_Explode (edict_t *ent)
 	//faf
 	edict_t	*checkent;
 
-	//faf:  so nades dont go off after game ends
+	//faf:  so nades don't go off after game ends
 	if (level.intermissiontime)
 	{
 		G_FreeEdict (ent);
@@ -1618,7 +1620,7 @@ void Shrapnel_Touch (edict_t *ent, edict_t *other, cplane_t *plane, csurface_t *
 
 	index= ITEM_INDEX(ent->item);
 
-	ent->touch = NULL; // so it doesnt keep upping the count
+	ent->touch = NULL; // so it doesn't keep upping the count
 
 	//other->client->pers.inventory[index]++;
 	other->client->newweapon = ent->item;
@@ -2185,7 +2187,7 @@ void fire_rocket_piat (edict_t *self, vec3_t start, vec3_t dir, int damage, int 
 	
 
 
-//faf:causing error and dont think is needed	if (self->client)
+//faf:causing error and don't think is needed	if (self->client)
 //faf		check_dodge (self, rocket->s.origin, dir, speed);
 
 	gi.linkentity (rocket);
@@ -2245,7 +2247,7 @@ void fire_rocket_panzerfaust (edict_t *self, vec3_t start, vec3_t dir, int damag
 	
 
 
-//faf:causing error and dont think is needed	if (self->client)
+//faf:causing error and don't think is needed	if (self->client)
 //faf		check_dodge (self, rocket->s.origin, dir, speed);
 
 	gi.linkentity (rocket);
@@ -2326,6 +2328,7 @@ void fire_gun (edict_t *self, vec3_t start, vec3_t aimdir, int damage, int kick,
 //	vec3_t		right, up;
 
 	int			hits = 0;
+	int tcount = 0;
 
 	float r,u;
 	vec3_t forward, right, up; 
@@ -2445,8 +2448,10 @@ void fire_gun (edict_t *self, vec3_t start, vec3_t aimdir, int damage, int kick,
 	ignore = self;
 	water = false;
 	mask = MASK_SHOT|CONTENTS_SLIME|CONTENTS_LAVA;
-	while (ignore)
+	tcount = 0;
+	while (ignore && tcount <1000)
 	{
+        tcount++;	
 		tr = gi.trace (from, NULL, NULL, end, ignore, mask);
 
 		if (tr.contents & (CONTENTS_SLIME|CONTENTS_LAVA))
@@ -2571,7 +2576,7 @@ edict_t *ApplyFirstAid (edict_t *ent)
     vec3_t  start;
     vec3_t  offset;
 
-    trace_t tr; //detect whats in front of you up to range "vec3_t end"
+    trace_t tr; //detect what's in front of you up to range "vec3_t end"
 
 
     vec3_t end;
@@ -2754,7 +2759,7 @@ void Weapon_Pistol_Fire (edict_t *ent)
 	ent->client->last_fire_time = level.time;//faf
 
 
-	/*faf:  this  doesnt really add anything to the game
+	/*faf:  this  doesn't really add anything to the game
 	if(ent->client->mags[mag_index].pistol_rnd==1)
 	{
 		//Hard coded for reload only.
@@ -3088,15 +3093,17 @@ void Weapon_Submachinegun_Fire (edict_t *ent)
 	P_ProjectSource (ent->client, ent->s.origin, offset, forward, right, start);
 */
 
+fire_gun(ent, start, forward, damage, kick, SMG_SPREAD, SMG_SPREAD, mod, false);
+
+
 	//fire_gun(ent, start, forward, damage, kick, SMG_SPREAD, SMG_SPREAD, mod, false);
-	fire_gun(ent, start, forward, damage, kick, 20, 20, mod, false);
-	ent->client->crosshair_offset_x += (random() -.5) * 1.1;
-	//ent->client->crosshair_offset_y += -.15 + (random() -.5) *1.1; //rise slightly
-	ent->client->crosshair_offset_y += (random() -.5) *1.1; //don't rise slightly
-	
+//	fire_gun(ent, start, forward, damage, kick, 20, 20, mod, false);
+//	ent->client->crosshair_offset_x += (random() -.5) * 1.1;
+//	ent->client->crosshair_offset_y += -.15 + (random() -.5) *1.1; //rise slightly
+	 
 
 
-	/*faf:  this  doesnt really add anything to the game
+	/*faf:  this  doesn't really add anything to the game
 	if(ent->client->mags[mag_index].submg_rnd==1)
 	{
 		//Hard coded for reload only.
@@ -3255,7 +3262,7 @@ void Weapon_LMG_Fire (edict_t *ent)
 
 
 	// pbowens: for darwin's 3.2 kick
-	ent->client->kick_angles[0] = ent->client->machinegun_shots * -.5;
+	ent->client->kick_angles[0] = ent->client->machinegun_shots * -1;
 
 	// get start / end positions
 	VectorAdd (ent->client->v_angle, ent->client->kick_angles, angles);
@@ -3264,14 +3271,11 @@ void Weapon_LMG_Fire (edict_t *ent)
 
 	P_ProjectSource (ent->client, ent->s.origin, offset, forward, right, start);
 
-	//fire_gun(ent, start, forward, damage, kick, LMG_SPREAD, LMG_SPREAD, mod, false);
+	fire_gun(ent, start, forward, damage, kick, LMG_SPREAD, LMG_SPREAD, mod, false);
 
-	fire_gun(ent, start, forward, damage, kick, 20, 20, mod, false);
-	ent->client->crosshair_offset_x += (random() -.5) * 1.4;
-	ent->client->crosshair_offset_y +=  (random() -.5) *1.4; 
 	
 
-	/*faf:  this  doesnt really add anything to the game
+	/*faf:  this  doesn't really add anything to the game
 	if(ent->client->mags[mag_index].lmg_rnd==1)
 	{
 		//Hard coded for reload only.
@@ -3505,28 +3509,7 @@ void Weapon_HMG_Fire (edict_t *ent)
 		else
 //			fire_hmg_bullet (ent, start, forward, damage, mod);//faf:  removing after testing
 		{
-			//fire_gun(ent, start, forward, damage, kick, HMG_SPREAD, HMG_SPREAD, mod, false);
-
-			fire_gun(ent, start, forward, damage, kick, 20, 20, mod, false);
-			ent->client->crosshair_offset_x += (random() -.5) * 2.5;
-			ent->client->crosshair_offset_y += (random() -.5) * 2.5; 
-
-			if (ent->client->crosshair_offset_x > 1)
-				ent->client->crosshair_offset_x -= .5;
-			if (ent->client->crosshair_offset_x < -1)
-				ent->client->crosshair_offset_x += .5;
-			if (ent->client->crosshair_offset_y > 1)
-				ent->client->crosshair_offset_y -= .5;
-			if (ent->client->crosshair_offset_y < -1)
-				ent->client->crosshair_offset_y += .5;
-
-			ent->client->crosshair_offset_x = (random() -.5) * 2;
-			ent->client->crosshair_offset_y = (random() -.5) * 2; 
-
-
-//			gi.dprintf("%f\n", ent->client->crosshair_offset_x);
-
-
+			fire_gun(ent, start, forward, damage, kick, HMG_SPREAD, HMG_SPREAD, mod, false);
 		}
 
 		// rezmoth - changed to new firing code
@@ -3561,6 +3544,292 @@ void Weapon_HMG_Fire (edict_t *ent)
 
 }
 
+void Weapon_MG42_Fire (edict_t *ent)
+{
+	int			i;
+	int			shots=1;
+	vec3_t		start;
+	vec3_t		forward, right, up;
+	vec3_t		offset;
+	vec3_t		angles;
+	int			kick = 30;
+	GunInfo_t *guninfo=ent->client->pers.weapon->guninfo;	
+	int mag_index=ent->client->pers.weapon->mag_index;
+	int mod=guninfo->MeansOfDeath;
+	int	damage=guninfo->damage_direct;
+	trace_t tr; //faf
+    vec3_t end; //faf
+	vec3_t g_offset; //faf
+
+
+	if (ent->client->next_fire_frame > level.framenum)
+		return;
+
+	//Wheaty: Disable HMG while standing, totally
+	//faf:  hmgers can now rest hmg on sandbags/objects in front of them
+	if (ent->stanceflags == STANCE_STAND && (ent->client->buttons & BUTTON_ATTACK))
+	{
+		VectorCopy (vec3_origin,g_offset);
+
+	    AngleVectors (ent->client->v_angle, forward, right, NULL);
+	    VectorSet(offset, 24, 8, ent->viewheight-25);
+	    VectorAdd (offset, g_offset, offset);
+	    P_ProjectSource (ent->client, ent->s.origin, offset, forward, right, start);
+	    VectorScale (forward, -2, ent->client->kick_origin);
+		
+		VectorMA (start, 15, forward, end);  //calculates the range vector  //faf: 10 = range
+		tr = gi.trace (ent->s.origin, NULL, NULL, end, ent, MASK_SHOT);// figures out what in front of the player up till "end"
+
+		if (ent->client->movement || tr.fraction >= 1.0 || ent->client->v_angle[0] > 40)
+		{
+			if (ent->client->gunwarntime && ent->client->gunwarntime > level.time - 1)
+				return;
+
+			safe_cprintf(ent, PRINT_HIGH, "You need to rest that thing on something to shoot it!\n");
+			ent->client->gunwarntime = level.time;
+			return;
+		}
+	}
+
+// this is for when the trigger is released
+	if (!(ent->client->buttons & BUTTON_ATTACK))
+	{
+		if (!ent->client->aim)
+			ent->client->ps.gunframe = guninfo->LastFire;
+		else 
+			ent->client->ps.gunframe=guninfo->LastAFire;
+
+		ent->client->weapon_sound = 0;
+		ent->client->machinegun_shots=0;
+		
+		ent->client->buttons &= ~BUTTON_ATTACK;
+		ent->client->latched_buttons &= ~BUTTON_ATTACK;
+		ent->client->weaponstate = WEAPON_READY;
+
+		return;
+	}
+
+	/*
+// if you are still firing, recycle back to first firing
+	if (!ent->client->aim)
+	{		
+		 if(ent->client->ps.gunframe == guninfo->LastFire) 
+			 ent->client->ps.gunframe = guninfo->LastFire-1;
+		 else 
+			 ent->client->ps.gunframe = guninfo->LastFire;
+	}
+// else give another guninfo
+	else
+	{
+		if (ent->client->ps.gunframe >= guninfo->LastAFire)
+			ent->client->ps.gunframe = guninfo->LastAFire-2;
+		else 
+			ent->client->ps.gunframe++;
+		
+	}
+//	*/
+
+	// pbowens: the following assumes HMGs use only 2 firing frames
+	i = (level.framenum % 2) ? 1 : 0;
+
+	if (ent->client->aim)
+		ent->client->ps.gunframe = guninfo->AFO[i];
+	else
+		ent->client->ps.gunframe = guninfo->FO[i];
+
+
+/*
+	if (ent->client->mags[mag_index].hmg_rnd < shots)
+		shots = ent->client->mags[mag_index].hmg_rnd;
+*/
+	if (ent->client->p_rnd && *ent->client->p_rnd == 0)
+	{
+		if (ent->client->weaponstate != WEAPON_FIRING)
+			return;
+
+		if (level.time >= ent->pain_debounce_time)
+		{
+			gi.sound(ent, CHAN_VOICE, gi.soundindex("weapons/noammo.wav"), 1, ATTN_NORM, 0);
+			ent->pain_debounce_time = level.time + 1;
+		}
+//		if(auto_weapon_change->value) NoAmmoWeaponChange (ent);
+
+		 if (ent->client->aim) 
+			 ent->client->ps.gunframe = guninfo->LastAFire;
+		 else 
+			 ent->client->ps.gunframe = guninfo->LastFire;
+
+		 ent->client->weaponstate = WEAPON_READY;
+
+		 return;
+	}
+
+
+
+
+
+//	jamchance = rand() % 100;
+	if (ent->client->mg42_temperature > 45)
+	{
+		gi.sound(ent, CHAN_WEAPON, gi.soundindex("weapons/noammo.wav"), 1, ATTN_NORM, 0);
+		safe_centerprintf(ent, "The MG42 overheated! Fire that\nthing in bursts next time!\n"); 
+		ent->client->mags[mag_index].hmg_rnd= 0;
+
+		//ent->client->mg42_temperature =0;
+		ent->client->pers.inventory[ITEM_INDEX(FindItem(ent->client->pers.weapon->ammo))]=0;
+
+		ent->client->mg42_temperature = 43;
+
+
+
+		return;
+	}
+
+
+
+
+
+
+
+
+
+
+	//ent->client->ps.gunframe++;
+
+	// get start / end positions
+	
+	//if not crouched, make gun jump sporadicly
+//faf	if (ent->stanceflags == STANCE_STAND || !ent->client->aim)
+	if (!ent->client->aim)
+	{	
+		for (i=0 ; i<3 ; i++)
+		{
+			//rezmoth - changed for new firing system
+			ent->client->kick_origin[i] = (crandom() * 3.35)-1.5;
+			ent->client->kick_angles[i] += (crandom() * 13.7)-1.5;
+		}
+		//rezmoth - changed for new firing system
+		ent->client->kick_origin[0] = crandom() * 0.35;
+		ent->client->kick_angles[0] += ent->client->machinegun_shots * -1.8;
+		// Raise HMG faster
+		ent->client->machinegun_shots += 2;
+		VectorAdd (ent->client->v_angle, ent->client->kick_angles, angles);
+		AngleVectors (angles, forward, right, up);
+	}
+	
+	else
+	{
+		for (i=0 ; i<3 ; i++)
+		{
+			//rezmoth - changed for new firing system
+			ent->client->kick_origin[i] = crandom() * 0.35;
+			ent->client->kick_angles[i] += crandom() * 0.7;
+		}
+		VectorAdd (ent->client->v_angle, ent->client->kick_angles, angles);
+		AngleVectors (angles, forward, right, up);
+	}
+	
+	// Instead of limit, force the aim down and start over for jumpiness
+	if (ent->client->machinegun_shots > 10)
+		ent->client->machinegun_shots -= 10;
+
+//	for (i=0 ; i<shots ; i++)
+//	{
+		// get start / end positions
+
+		//rezmoth - changed for new firing system
+		//if(!ent->client->aim) 
+		//	//VectorSet(offset, 50, 9, ent->viewheight-6);
+		//	VectorSet(offset, 50, 9, crandom() * 40);
+		//else 
+		//	VectorSet(offset, 50, 0, ent->viewheight-1);
+
+		//rezmoth - changed for new firing system
+		/*
+		if (!strcmp(ent->client->pers.weapon->ammo, "mg42_mag"))
+		{
+			VectorSet(offset, 200, 0, ent->viewheight + 4);
+		} else if (!strcmp(ent->client->pers.weapon->ammo, "hmg_mag")) {
+			VectorSet(offset, 0, 0, ent->viewheight + 20);
+		} else {
+			gi.dprintf("*** Firing System Error\n");
+		}
+		*/
+
+		//start[2] += ent->viewheight;
+		//start[2] += ent->viewheight;
+
+		VectorSet(offset, 0, 0, ent->viewheight - 0);
+		P_ProjectSource (ent->client, ent->s.origin, offset, forward, right, start);
+
+		// rezmoth - tracers moved to here
+		//fire_bullet (ent, start, forward, damage, kick, DEFAULT_BULLET_HSPREAD, DEFAULT_BULLET_VSPREAD, mod, true);
+		++ent->numfired;
+
+
+		if (ent->numfired % TRACERSHOT == 1)
+		{
+			VectorNormalize (right);
+			if (ent->client->pers.hand)
+				VectorScale (right, .0175 * ent->client->crosshair_offset_x, right);
+			else
+				VectorScale (right, -.0175 * ent->client->crosshair_offset_x, right);
+
+			VectorAdd (forward, right, forward);
+			forward[2] += -.0175 * ent->client->crosshair_offset_y;// (forward, right, forward);
+			fire_tracer (ent, start, forward, damage, mod);
+
+//			fire_gun(ent, start, forward, damage, kick, HMG_SPREAD, HMG_SPREAD, mod, false); //mg42 fires twice as fast now
+
+		}
+		else
+//			fire_hmg_bullet (ent, start, forward, damage, mod);//faf:  removing after testing
+		{
+			fire_gun(ent, start, forward, damage, kick, HMG_SPREAD, HMG_SPREAD, mod, false);
+
+		//	fire_gun(ent, start, forward, damage, kick, HMG_SPREAD, HMG_SPREAD, mod, false);  //mg42 fires twice as fast now
+
+		}
+
+		// rezmoth - changed to new firing code
+		//fire_bullet (ent, start, forward, damage, kick, DEFAULT_BULLET_HSPREAD, DEFAULT_BULLET_VSPREAD, mod, true);
+
+//	}
+
+	Play_WepSound(ent,guninfo->FireSound);//PlayerNoise(ent, start, PNOISE_WEAPON);
+
+	// send muzzle flash
+	gi.WriteByte (svc_muzzleflash);
+	gi.WriteShort (ent-g_edicts);
+	gi.WriteByte (MZ_MACHINEGUN | is_silenced);
+	gi.multicast (ent->s.origin, MULTICAST_PVS);
+
+	/*
+	if (ent->client->p_rnd && *ent->client->p_rnd==1)
+	  { 
+		//Hard coded for reload only.
+        ent->client->ps.gunframe=guninfo->LastReload + 1;
+        ent->client->weaponstate = WEAPON_END_MAG;
+		Play_WepSound(ent,guninfo->LastRoundSound);
+	  }
+	  */
+
+
+	//if (! ( (int)dmflags->value & DF_INFINITE_AMMO ) )
+	//	ent->client->pers.inventory[ent->client->ammo_index] -= shots;
+
+		//ent->client->mags[mag_index].hmg_rnd-= 2; //shots;
+
+		ent->client->mags[mag_index].hmg_rnd-= 1; //shots;
+
+	//	if(ent->client->mags[mag_index].hmg_rnd==0 && auto_reload->value) Cmd_Reload_f(ent);
+	ent->client->next_fire_frame = level.framenum + guninfo->frame_delay;
+
+
+//		ent->client->mg42_temperature++;
+
+
+}
 
 void Weapon_Rocket_Fire (edict_t *ent)
 {
@@ -4757,8 +5026,8 @@ void Weapon_Sten_Fire (edict_t *ent)
 	}
 
 	// pbowens: for darwin's 3.2 kick
-//	ent->client->kick_angles[0] = ent->client->machinegun_shots * -1;
-//	ent->client->kick_angles[1] = ent->client->machinegun_shots * .3;
+	ent->client->kick_angles[0] = ent->client->machinegun_shots * -1;
+	ent->client->kick_angles[1] = ent->client->machinegun_shots * .3;
 
 	// get start / end positions
 	VectorAdd (ent->client->v_angle, ent->client->kick_angles, angles);
@@ -4773,12 +5042,12 @@ void Weapon_Sten_Fire (edict_t *ent)
 	P_ProjectSource (ent->client, ent->s.origin, offset, forward, right, start);
 */
 
-//	fire_gun(ent, start, forward, damage, kick, SMG_SPREAD, SMG_SPREAD, mod, false);
 
-	//fire_gun(ent, start, forward, damage, kick, SMG_SPREAD, SMG_SPREAD, mod, false);
-	fire_gun(ent, start, forward, damage, kick, 0, 0, mod, false);
-	ent->client->crosshair_offset_x +=  random() -.5 -.1; //move right slightly as per Parts' pa description
-	ent->client->crosshair_offset_y +=  random() -.5 -.1; //rise slightly
+	fire_gun(ent, start, forward, damage, kick, SMG_SPREAD, SMG_SPREAD, mod, false);
+
+	//fire_gun(ent, start, forward, damage, kick, 0, 0, mod, false);
+//	ent->client->crosshair_offset_x +=  random() -.5 -.1; //move right slightly as per Parts' pa description
+//	ent->client->crosshair_offset_y +=  random() -.5 -.1; //rise slightly
 	
 
 
@@ -5220,7 +5489,7 @@ void Weapon_Shotgun_Fire (edict_t *ent)
 
 qboolean fire_katana ( edict_t *self, vec3_t start, vec3_t dir, int damage, int kick)
 {    
-    trace_t tr; //detect whats in front of you up to range "vec3_t end"
+    trace_t tr; //detect what's in front of you up to range "vec3_t end"
 
     vec3_t end;
 
@@ -5765,7 +6034,7 @@ void Weapon_Ppsh41_Fire (edict_t *ent)
 	fire_gun(ent, start, forward, damage, kick, SMG_SPREAD, SMG_SPREAD, mod, false);
 
 //faf:  a second bullet comes out every other time.  This combined with the 
-//		sound effects creates the illusion of a higher (consistant) firing rate
+//		sound effects creates the illusion of a higher (consistent) firing rate
 	if (ent->numfired % 2 == 1)
 	{
 		for (i=0 ; i<3 ; i++)
@@ -6165,7 +6434,7 @@ void Weapon_MG34_Fire (edict_t *ent)
 
 qboolean fire_sabre ( edict_t *self, vec3_t start, vec3_t dir, int damage, int kick)
 {    
-    trace_t tr; //detect whats in front of you up to range "vec3_t end"
+    trace_t tr; //detect what's in front of you up to range "vec3_t end"
 
     vec3_t end;
 
