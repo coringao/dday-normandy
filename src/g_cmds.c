@@ -31,6 +31,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "stddef.h"
 //#include "p_classes.h"
 
+#pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
+#pragma GCC diagnostic ignored "-Wimplicit-function-declaration"
+
 void EndObserverMode(edict_t *ent);
 void Show_Mos(edict_t *ent);
 qboolean Cmd_Scope_f(edict_t *ent);
@@ -147,7 +150,6 @@ void Cmd_FlyingNunMode_f(edict_t *ent)
 		ent->client->resp.mos = 0;
 		gi.linkentity (ent);  */
 
-
 		ent->s.sound = 0;
 		ent->s.modelindex = 0;
 		ent->movetype = MOVETYPE_NOCLIP; 
@@ -156,7 +158,6 @@ void Cmd_FlyingNunMode_f(edict_t *ent)
 		ent->client->ps.gunindex = 0; 
 		ent->client->resp.team_on = NULL;
 		ent->client->resp.mos = NONE;
-
 
 	}
 }
@@ -180,7 +181,6 @@ void Cmd_AliciaMode_f(edict_t *ent) // made it legible (pbowens 07/12/99)
 			stuffcmd(tempent,"say Alicia Silverstone Is the Loveliest Actress In the Whole Universe!");
 	}
 }
-
 
 void Cmd_SexPistols_f(edict_t *ent)
 {
@@ -538,8 +538,7 @@ return false;
 //	else
 //		ent->client->crosshair_offset = 0;
 
-	if (ent->client->pers.weapon->position == LOC_H_MACHINEGUN || //no hmg or engineer cuz tracers/rockets need more work
-		ent->client->pers.weapon->position == LOC_ROCKET ||
+	if (ent->client->pers.weapon->position == LOC_ROCKET ||
 		ent->client->pers.weapon->position == LOC_SNIPER ||
 		ent->client->pers.weapon->position == LOC_HELMET ||
 		ent->client->pers.weapon->position == LOC_FLAME ||
@@ -1096,7 +1095,7 @@ gitem_t	*FindNextPos (edict_t *ent,int position)
 
 		if( i >= game.num_items) 
 		{
-			it = itemlist+1; //if it > number of items, recycle to begining
+			it = itemlist+1; //if it > number of items, recycle to beginning
 			i  = ITEM_INDEX(it);
 		}
 
@@ -1104,7 +1103,7 @@ gitem_t	*FindNextPos (edict_t *ent,int position)
 			continue;		//keep going if NULL
 
 		if (ent->client->pers.weapon == it)
-				return tempit;	//if complete circut through list, return
+				return tempit;	//if complete circuit through list, return
 		
 		if (it->position == position)
 		{
@@ -1538,7 +1537,7 @@ void Cmd_Drop_f (edict_t *ent)
 	}
 	if (!it->drop)
 	{
-		safe_cprintf (ent, PRINT_HIGH, "Item is not dropable.\n");
+		safe_cprintf (ent, PRINT_HIGH, "Item is not droppable.\n");
 		return;
 	}
 
@@ -1944,7 +1943,7 @@ void Cmd_InvDrop_f (edict_t *ent)
 	it = &itemlist[ent->client->pers.selected_item];
 	if (!it->drop)
 	{
-		safe_cprintf (ent, PRINT_HIGH, "Item is not dropable.\n");
+		safe_cprintf (ent, PRINT_HIGH, "Item is not droppable.\n");
 		return;
 	}
 	it->drop (ent, it);
@@ -2602,7 +2601,7 @@ void Cmd_Say_f (edict_t *ent, qboolean team, qboolean arg0, qboolean saved)
 
 
 /*
-This routine is for changing the stances and to allow lowcrawl type  manuevers.
+This routine is for changing the stances and to allow lowcrawl type  maneuvers.
 */
 
 void change_stance(edict_t *self, int stance)
@@ -2750,7 +2749,7 @@ void Cmd_Create_Team(edict_t *ent)
 			found=true;
 
 			SP_info_team_start(team);
-			free(team->pathtarget); // clean up string memmory
+			free(team->pathtarget); // clean up string memory
 			free(team->message);
 			G_FreeEdict(team);		//kill temp entity
 			
@@ -3023,13 +3022,6 @@ qboolean Cmd_Reload (edict_t *ent)
 	}
 
 
-	if (ent->client->pers.weapon->position == LOC_SUBMACHINEGUN)
-	{
-		ent->client->crosshair_offset_x = 0;
-		ent->client->crosshair_offset_y = 0;
-	}
-
-
 	if (ent->client->pers.weapon->ammo)
 	{
 		ammo_item = FindItem(ent->client->pers.weapon->ammo);
@@ -3060,11 +3052,10 @@ qboolean Cmd_Reload (edict_t *ent)
 		return true;
 
 	// rezmoth - bug here crashes for what reason?
-	if (*ammo_amount && 
-		ent->client->p_rnd && //faf
-		*ent->client->p_rnd == ammo_item->quantity) {
-			safe_cprintf(ent, PRINT_HIGH, "You still have a full magazine left!\n");
-			return true;
+	if (ent->client->p_rnd && *ent->client->p_rnd == ammo_item->quantity) 
+	{
+		safe_cprintf(ent, PRINT_HIGH, "You still have a full magazine left!\n");
+		return true;
 	}
 	
 	WeighPlayer(ent);
@@ -3193,8 +3184,11 @@ void Cmd_Shout_f(edict_t *ent)
 {
 	char filename[MAX_FILENAME_LENGTH];
 	char soundfile[50];
+	char *shout;
 	int i;
 	qboolean newshout = true;
+
+
 
 	//faf
 	if (ent->deadflag || ent->client->limbo_mode)
@@ -3220,47 +3214,50 @@ void Cmd_Shout_f(edict_t *ent)
 		return;
 	}
 
+	shout = gi.argv(1);
+//	if (!strcmp (shout, "no2"))
+//		shout = "no1";
 
-	if (!strcmp(gi.argv(1), "thanks1") ||
-		!strcmp(gi.argv(1), "thanks2") ||
-		!strcmp(gi.argv(1), "yes1") ||
-		!strcmp(gi.argv(1), "yes2") ||
-		!strcmp(gi.argv(1), "no1") ||
-		!strcmp(gi.argv(1), "no2") ||
-		!strcmp(gi.argv(1), "cover1") ||
-		!strcmp(gi.argv(1), "cover2") ||
-		!strcmp(gi.argv(1), "cover3") ||
-		!strcmp(gi.argv(1), "move1") ||
-		!strcmp(gi.argv(1), "move2") ||
-		!strcmp(gi.argv(1), "left1") ||
-		!strcmp(gi.argv(1), "left2") ||
-		!strcmp(gi.argv(1), "right1") ||
-		!strcmp(gi.argv(1), "right2") ||
-		!strcmp(gi.argv(1), "medic") ||
-		!strcmp(gi.argv(1), "attack1") ||
-		!strcmp(gi.argv(1), "attack2") ||
-		!strcmp(gi.argv(1), "retreat1") ||
-		!strcmp(gi.argv(1), "retreat2") ||
-		!strcmp(gi.argv(1), "shoulders1") ||
-		!strcmp(gi.argv(1), "shoulders2") ||
-		!strcmp(gi.argv(1), "incoming1") ||
-		!strcmp(gi.argv(1), "incoming2") ||
-		!strcmp(gi.argv(1), "follow1") ||
-		!strcmp(gi.argv(1), "follow2") ||
-		!strcmp(gi.argv(1), "funny1") ||
-		!strcmp(gi.argv(1), "funny2") ||
-		!strcmp(gi.argv(1), "funny3") ||
-		!strcmp(gi.argv(1), "sniper1") ||
-		!strcmp(gi.argv(1), "sniper2") ||
-		!strcmp(gi.argv(1), "cease1") ||
-		!strcmp(gi.argv(1), "cease2") ||
-		!strcmp(gi.argv(1), "weapon1") ||
-		!strcmp(gi.argv(1), "weapon2") ||
-		!strcmp(gi.argv(1), "grenade1") ||
-		!strcmp(gi.argv(1), "eye1") ||
-		!strcmp(gi.argv(1), "thanks1") ||
-		!strcmp(gi.argv(1), "smoke1") ||
-		!strcmp(gi.argv(1), "help1"))
+	if (!strcmp(shout, "thanks1") ||
+		!strcmp(shout, "thanks2") ||
+		!strcmp(shout, "yes1") ||
+		!strcmp(shout, "yes2") ||
+		!strcmp(shout, "no1") ||
+		!strcmp(shout, "no2") ||
+		!strcmp(shout, "cover1") ||
+		!strcmp(shout, "cover2") ||
+		!strcmp(shout, "cover3") ||
+		!strcmp(shout, "move1") ||
+		!strcmp(shout, "move2") ||
+		!strcmp(shout, "left1") ||
+		!strcmp(shout, "left2") ||
+		!strcmp(shout, "right1") ||
+		!strcmp(shout, "right2") ||
+		!strcmp(shout, "medic") ||
+		!strcmp(shout, "attack1") ||
+		!strcmp(shout, "attack2") ||
+		!strcmp(shout, "retreat1") ||
+		!strcmp(shout, "retreat2") ||
+		!strcmp(shout, "shoulders1") ||
+		!strcmp(shout, "shoulders2") ||
+		!strcmp(shout, "incoming1") ||
+		!strcmp(shout, "incoming2") ||
+		!strcmp(shout, "follow1") ||
+		!strcmp(shout, "follow2") ||
+		!strcmp(shout, "funny1") ||
+		!strcmp(shout, "funny2") ||
+		!strcmp(shout, "funny3") ||
+		!strcmp(shout, "sniper1") ||
+		!strcmp(shout, "sniper2") ||
+		!strcmp(shout, "cease1") ||
+		!strcmp(shout, "cease2") ||
+		!strcmp(shout, "weapon1") ||
+		!strcmp(shout, "weapon2") ||
+		!strcmp(shout, "grenade1") ||
+		!strcmp(shout, "eye1") ||
+		!strcmp(shout, "thanks1") ||
+		!strcmp(shout, "smoke1") ||
+		!strcmp(shout, "help1"))
 	{
 		newshout=false;
 	}
@@ -3270,7 +3267,7 @@ void Cmd_Shout_f(edict_t *ent)
 
 
 
-	strcpy(filename,gi.argv(1));
+	strcpy(filename,shout);
 
 	for (i = 0; filename[i]; i++)
 		filename[i] = tolower(filename[i]);
@@ -3294,7 +3291,7 @@ void Cmd_Shout_f(edict_t *ent)
 		}
 		if (newshout)
 		{
-			if (user_shout_count >19)
+			if (user_shout_count >10)
 			{
 				safe_cprintf(ent, PRINT_HIGH, "Too many user shouts already, sorry!\n");
 				return;
@@ -3305,10 +3302,11 @@ void Cmd_Shout_f(edict_t *ent)
 			Com_sprintf (user_shouts[user_shout_count], sizeof(user_shouts[user_shout_count]), "%s", soundfile);
 
 
-			//gi.dprintf("usc: %i   %s\n",user_shout_count,user_shouts[user_shout_count]);
 		}
+
 	}
 
+	gi.dprintf("shout: %s  %s  %s\n",ent->client->pers.netname,ent->client->resp.team_on->playermodel, shout);
 
 
 
