@@ -529,7 +529,7 @@ void Weapon_Generic (edict_t *ent,
 		}
 		else
 		{
-//no_fire:
+no_fire:
 			ent->client->machinegun_shots = 0;
 
 			if (ent->client->pers.weapon->position == LOC_SNIPER &&
@@ -576,16 +576,16 @@ void Weapon_Generic (edict_t *ent,
 		if ( ((ent->client->buttons) & BUTTON_ATTACK) )
 		{
 			//faf
-/*			if ((ent->waterlevel ==3 ||
+			if ((ent->waterlevel ==3 ||
 				(ent->waterlevel ==2 && ent->client->v_angle[0]>0)) &&
-				(ent->client->pers.weapon->position != LOC_KNIFE &&
-				ent->client->pers.weapon->position != LOC_SPECIAL))
+				(ent->client->pers.weapon->position == LOC_FLAME ||
+				ent->client->pers.weapon->position == LOC_ROCKET))
 			{
 				if (!ent->burnout && ent->client->buttons != ent->client->oldbuttons)
 					gi.sound(ent, CHAN_VOICE, gi.soundindex("weapons/noammo.wav"),1, ATTN_NORM, 0);
 				ent->client->ps.gunframe++;
 				goto no_fire;
-			}*/
+			}
 		}
 		
 		for (n = 0; fire_frames[n]; n++)
@@ -655,7 +655,7 @@ void Weapon_Generic (edict_t *ent,
 					if (extra_anims->value != 1)
 					{
 						if (ent->client->movement && !ent->client->aim) 
-						{ // dont play attack animation when running
+						{ // don't play attack animation when running
 							if (ent->s.frame >= FRAME_attack1 && ent->s.frame <= FRAME_attack8)
 								ent->client->anim_end = ent->s.frame;
 							goto skip_anim;
