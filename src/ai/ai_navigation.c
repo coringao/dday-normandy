@@ -316,15 +316,13 @@ int AI_ClosestNodeToSpot( vec3_t origin, edict_t *passent, qboolean visible)
 //==========================================
 int AI_ClosestNodeToReachableSpot(edict_t *self, vec3_t origin)
 {
-	int			i;
+	int		i;
 	float		closest = 999999999;
 	float		dist;
-	int			node=-1;
+	int		node=-1;
 	vec3_t		v;
-
-	int			check[3];
-	int			c;
-
+	int		check[0];
+	int		c;
 
 	//gi.dprintf("%s\n",vtos(origin));
 	check[0]=-1;
