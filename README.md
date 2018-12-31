@@ -20,7 +20,7 @@ an advanced 3D graphics card.
 
 On Debian/GNU/Linux you can get all necessary packages by typing:
 
-    # apt install zlib1g-dev libpng-dev libjpeg-dev libsdl2-dev libopenal-dev libx11-dev libcurl4-gnutls-dev
+    # apt install libcurl4-gnutls-dev libjpeg-dev liblircclient-dev libopenal-dev libpng-dev libsdl2-dev libx11-dev mesa-common-dev zlib1g-dev
 
 When all these dependencies are installed to start compiling the game.
 To create the game binary, do it from the source directory.
