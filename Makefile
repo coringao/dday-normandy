@@ -2,6 +2,7 @@
 
 CP = cp -f
 RM = rm -f
+MV = mv
 ECHO = echo
 
 q2pro:
@@ -14,11 +15,11 @@ dday/config.cfg:
 
 dday: dday/config.cfg
 	@$(MAKE) -C src
-	@$(CP) -a src/game?*.real.* dday/
+	@$(MV) src/game?*.real.* dday/
 
 q2admin:
 	@$(MAKE) -C src/q2admin
-	@$(CP) -a src/q2admin/game?*.* dday/
+	@$(MV) src/q2admin/game?*.* dday/
 
 build: q2pro dday q2admin
 
